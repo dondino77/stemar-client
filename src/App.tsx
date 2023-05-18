@@ -11,17 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store";
 import { login } from "./reducers/auth";
 
-// Funzione di autenticazione fittizia
-const fakeAuth = {
-  isAuthenticated: false,
-  login: () => {
-    fakeAuth.isAuthenticated = true;
-  },
-  logout: () => {
-    fakeAuth.isAuthenticated = false;
-  },
-};
-
 const App: React.FC = () => {
   const dispatch = useDispatch();
   const logged = useSelector((state: RootState) => state.auth.isLoggedIn);
