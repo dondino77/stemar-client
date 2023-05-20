@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CardCantiere from "../../components/card-cantiere";
+import CardCantiere from "../../components/cards/card-cantiere";
 import "./cantieri.css";
 import { RootState } from "../../store";
 import { Cantiere } from "../../reducers/cantieri/types";
@@ -27,10 +27,10 @@ const CantieriScreen: React.FC<CantieriScreenProps> = () => {
           <FontAwesomeIcon className="icon" icon={faPlus} />
           Nuovo cantiere
         </button>
-        <button className="button">
+        {/* <button className="button">
           <FontAwesomeIcon className="icon" icon={faArchive} />
           Archivia cantiere
-        </button>
+        </button> */}
       </div>
 
       <div className={"cantieri-line"}></div>

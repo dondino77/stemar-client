@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Toolbar from "../../components/toolbar";
 import "./home.css";
 import { useDispatch } from "react-redux";
-import ModalCantiere from "../../components/modal-cantiere";
+import ModalCantiere from "../../components/modals/modal-cantiere";
 import { logout } from "../../reducers/auth";
 import CantieriScreen from "../CantieriScreen";
 import MezziScreen from "../MezziScreen";
@@ -15,7 +15,7 @@ const Home: React.FC<HomeProps> = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [screenSelected, setScreenSelected] = useState<
-    "cantieri" | "mezzi" | "personale"
+    "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare"
   >("cantieri");
 
   const handleOpenModal = () => {
@@ -26,7 +26,7 @@ const Home: React.FC<HomeProps> = () => {
     setIsModalOpen(false);
   };
 
-  const handleSelectScreen = (txt: "cantieri" | "mezzi" | "personale") => {
+  const handleSelectScreen = (txt: "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare") => {
     setScreenSelected(txt);
   };
 

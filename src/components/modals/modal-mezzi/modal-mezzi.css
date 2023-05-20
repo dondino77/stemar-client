@@ -1,0 +1,83 @@
+.vehicle-modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  /* transform: translate(-50%, -50%); */
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  z-index: 2;
+}
+
+.vehicle-modal-content {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 550px;
+}
+
+.vehicle-modal h2 {
+  margin-top: 0;
+}
+
+.vehicle-modal label {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.vehicle-modal input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.vehicle-form-field {
+  margin-bottom: 15px;
+}
+
+.vehicle-form-field label {
+  display: block;
+}
+
+.vehicle-form-field input,
+.vehicle-form-field select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 30px;
+  margin-top: 10px;
+
+}
+
+.vehicle-modal-bottom-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.vehicle-btn-confirm,
+.vehicle-btn-cancel {
+  padding: 8px 15px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  height: 40px;
+}
+
+.vehicle-btn-confirm:hover,
+.vehicle-btn-cancel:hover {
+  background-color: #0056b3;
+}

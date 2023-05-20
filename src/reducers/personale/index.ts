@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Persona, PersonaleState } from './types';
 
-interface Persona {
-  id: string;
-  nome: string;
-  cognome: string;
-  ruolo: string;
-  // altre proprietà della persona
-}
-
-interface PersonaleState {
-  list: Persona[];
-}
 
 const initialState: PersonaleState = {
-  list: [],
+  personale: [],
+  form: {
+    id: '',
+    nome: '',
+    cognome: '',
+    dataNascita: '',
+    coefficiente: 0,
+    idMansione: 0,
+    mansione: '',
+    manovale: false,
+  }
 };
 
 const personaleReducer = createSlice({
@@ -21,13 +21,13 @@ const personaleReducer = createSlice({
   initialState,
   reducers: {
     setPersonale(state, action: PayloadAction<Persona[]>) {
-      state.list = action.payload;
+      state.personale = action.payload;
     },
     addPersona(state, action: PayloadAction<Persona>) {
-      state.list.push(action.payload);
+      state.personale.push(action.payload);
     },
     removePersona(state, action: PayloadAction<string>) {
-      state.list = state.list.filter(persona => persona.id !== action.payload);
+      state.personale = state.personale.filter(persona => persona.id !== action.payload);
     },
     // altre azioni per la gestione del personale
   },

@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import "./toolbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightToBracket, faBell } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightToBracket, faBell, faGear } from "@fortawesome/free-solid-svg-icons";
 
 interface ToolbarProps {
   onLogout: () => void;
-  onSelectScreen: (txt: "cantieri" | "mezzi" | "personale") => void;
+  onSelectScreen: (txt: "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare") => void;
 }
 
 const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
   const { onLogout, onSelectScreen } = iProps;
   
   const [screenSelected, setScreenSelected] = useState<
-    "cantieri" | "mezzi" | "personale"
+    "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare"
   >("cantieri");
 
   const handleCantieriClick = () => {
@@ -29,7 +29,14 @@ const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
     setScreenSelected('personale');
     onSelectScreen("personale");
   };
-
+  const handleAmministrazioneClick = () => {
+    setScreenSelected('amministrazione');
+    // onSelectScreen("personale");
+  };
+  const handleGareClick = () => {
+    setScreenSelected('gare');
+    // onSelectScreen("personale");
+  };
   const handleNotificheClick = () => {
     // Logica da eseguire al clic sul pulsante "Notifiche"
   };
@@ -44,10 +51,15 @@ const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
         <button className={screenSelected === 'cantieri' ? 'selected' : ''} onClick={handleCantieriClick}>Cantieri</button>
         <button className={screenSelected === 'mezzi' ? 'selected' : ''} onClick={handleMezziClick}>Mezzi</button>
         <button className={screenSelected === 'personale' ? 'selected' : ''} onClick={handlePersonaleClick}>Personale</button>
+        <button disabled className={screenSelected === 'amministrazione' ? 'selected' : ''} onClick={handleAmministrazioneClick}>Amministrazione</button>
+        <button disabled className={screenSelected === 'gare' ? 'selected' : ''} onClick={handleGareClick}>Gare</button>
       </div>
       <div className="toolbar-right">
         <button onClick={handleNotificheClick}>
           <FontAwesomeIcon icon={faBell} />
+        </button>
+        <button onClick={handleLogoutClick}>
+        <FontAwesomeIcon icon={faGear} />
         </button>
         <button onClick={handleLogoutClick}>
           <FontAwesomeIcon icon={faArrowRightToBracket} />

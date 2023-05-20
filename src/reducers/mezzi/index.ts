@@ -1,32 +1,59 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Mezzo {
-  id: string;
-  nome: string;
-  tipo: string;
-  // altre proprietà del mezzo
-}
-
-interface MezziState {
-  list: Mezzo[];
-}
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { MezziState, Mezzo } from "./types";
 
 const initialState: MezziState = {
-  list: [],
+  mezzi: [
+    {
+      id: "1",
+      nome: "Iveco",
+      targa: "AA000BB",
+      dataScadenzaAssicurazione: "13/08/2023",
+      dataScadenzaBollo: "29/09/2023",
+      dataProssimaRevisione: "28/09/2023",
+      costoKm: 10,
+    },
+    {
+      id: "2",
+      nome: "Ducato",
+      targa: "AA000BB",
+      dataScadenzaAssicurazione: "2023-08-08",
+      dataScadenzaBollo: "29/09/2023",
+      dataProssimaRevisione: "28/09/2023",
+      costoKm: 10,
+    },
+    {
+      id: "3",
+      nome: "Fiorino",
+      targa: "AA000BB",
+      dataScadenzaAssicurazione: "13/08/2023",
+      dataScadenzaBollo: "29/09/2023",
+      dataProssimaRevisione: "28/09/2023",
+      costoKm: 10,
+    },
+  ],
+  form: {
+    id: "",
+    nome: "",
+    targa: "",
+    dataScadenzaAssicurazione: "",
+    dataScadenzaBollo: "",
+    dataProssimaRevisione: "",
+    costoKm: 0,
+  }
 };
 
 const mezziReducer = createSlice({
-  name: 'mezzi',
+  name: "mezzi",
   initialState,
   reducers: {
     setMezzi(state, action: PayloadAction<Mezzo[]>) {
-      state.list = action.payload;
+      state.mezzi = action.payload;
     },
     addMezzo(state, action: PayloadAction<Mezzo>) {
-      state.list.push(action.payload);
+      state.mezzi.push(action.payload);
     },
     removeMezzo(state, action: PayloadAction<string>) {
-      state.list = state.list.filter(mezzo => mezzo.id !== action.payload);
+      state.mezzi = state.mezzi.filter((mezzo) => mezzo.id !== action.payload);
     },
     // altre azioni per la gestione dei mezzi
   },
