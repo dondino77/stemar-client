@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Toolbar from "../../components/toolbar";
 import "./home.css";
 import { useDispatch } from "react-redux";
-import ModalCantiere from "../../components/modals/modal-cantiere";
 import { logout } from "../../reducers/auth";
 import CantieriScreen from "../CantieriScreen";
 import MezziScreen from "../MezziScreen";
@@ -12,19 +11,10 @@ interface HomeProps {}
 
 const Home: React.FC<HomeProps> = () => {
   const dispatch = useDispatch();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [screenSelected, setScreenSelected] = useState<
     "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare"
   >("cantieri");
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   const handleSelectScreen = (txt: "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare") => {
     setScreenSelected(txt);
@@ -40,7 +30,6 @@ const Home: React.FC<HomeProps> = () => {
       <div className="page-container">
 
         {/* <button onClick={handleOpenModal}>Apri Modale</button> */}
-        {isModalOpen && <ModalCantiere onClose={handleCloseModal} />}
         <div>
           {screenSelected === "cantieri" && <CantieriScreen />}
           {screenSelected === "mezzi" && <MezziScreen />}

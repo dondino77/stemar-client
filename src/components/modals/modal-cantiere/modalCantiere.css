@@ -21,8 +21,8 @@
     opacity: 0;
     transform: translateY(-20px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-    height: 450px;
-    width: 450px;
+    height: 750px;
+    width: 950px;
   }
   
   .modal.open {
@@ -40,11 +40,11 @@
     padding: 20px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
+    height: 590px;
   }
 
   .tabs {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background-color: #f0f0f0;
     padding: 10px;
@@ -56,10 +56,95 @@
     background-color: #ccc;
     border-radius: 5px;
     color: #444;
+    margin-right: 10px;
   }
   
   .tab.active {
     background-color: #007bff;
     color: #fff;
   }
+
+.cantiere-modal-bottom-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.cantiere-btn-confirm,
+.cantiere-btn-cancel {
+  padding: 8px 15px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  height: 40px;
+}
+
+.cantiere-btn-confirm:hover,
+.cantiere-btn-cancel:hover {
+  background-color: #0056b3;
+}
+
+.personale-in-cantiere-grid1 {
+  display: grid;
+  flex: 1;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  padding: 15px;
+}
+
+.personale-in-cantiere-grid2 {
+  display: grid;
+  grid-template-columns: 4fr .5fr .5fr;
+  flex: 3;
+  border: 1px solid #ccc;
+  padding: 15px;
+}
+
+.personale-in-cantiere-column {
+  background-color: #f2f2f2;
+}
+
+.personale-in-cantiere-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.personale-in-cantiere-row {
+  /* margin-bottom: 5px; */
+  height: 30px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+}
+
+select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+/* 
+button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+} */
+
+.cantiere-grouped-grid {
+  display: flex;
+  padding: 10px;
+
+}
+
   

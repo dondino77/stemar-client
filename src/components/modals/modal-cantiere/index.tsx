@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./modalCantiere.css";
-import ComboBox from "../../combo-box";
+import PersonaleCantiere from "./personale-cantiere";
 
 interface TabProps {
   label: string;
@@ -24,9 +24,6 @@ const Mezzi = () => {
   return <div>Contenuto della tab Mezzi</div>;
 };
 
-const Personale = () => {
-  return <div>Contenuto della tab Personale</div>;
-};
 
 const Materiali = () => {
   return <div>Contenuto della tab Materiali</div>;
@@ -37,34 +34,51 @@ interface ModalCantiereProps {
 }
 
 const ModalCantiere: React.FC<ModalCantiereProps> = ({ onClose }) => {
-  const [activeTab, setActiveTab] = useState("mezzi");
+  const [activeTab, setActiveTab] = useState("Personale");
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
   };
 
+  const handleConfirm = () => {};
+
   return (
     <div className={`modal open`} onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="tabs">
-          <Tab label="mezzi" activeTab={activeTab} onClick={handleTabClick} />
           <Tab
-            label="personale"
+            label="Personale"
             activeTab={activeTab}
             onClick={handleTabClick}
           />
+          <Tab label="Mezzi" activeTab={activeTab} onClick={handleTabClick} />
+
           <Tab
-            label="materiali"
+            label="Materiali"
+            activeTab={activeTab}
+            onClick={handleTabClick}
+          />
+          <Tab label="SAL" activeTab={activeTab} onClick={handleTabClick} />
+          <Tab
+            label="Riepilogo"
             activeTab={activeTab}
             onClick={handleTabClick}
           />
         </div>
+
         <div className="tab-content">
-          {activeTab === "mezzi" && <Mezzi />}
-          {activeTab === "personale" && <Personale />}
+          {activeTab === "Mezzi" && <Mezzi />}
+          {activeTab === "Personale" && <PersonaleCantiere />}
           {activeTab === "materiali" && <Materiali />}
         </div>
-        <button onClick={onClose}>Chiudi</button>
+        <div className="cantiere-modal-bottom-bar">
+          <button className="cantiere-btn-cancel" onClick={onClose}>
+            Annulla
+          </button>
+          <button className="cantiere-btn-confirm" onClick={handleConfirm}>
+            Conferma
+          </button>
+        </div>
       </div>
     </div>
   );
