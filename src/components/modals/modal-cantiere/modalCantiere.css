@@ -90,6 +90,7 @@
 .personale-in-cantiere-grid1 {
   display: grid;
   flex: 1;
+  grid-template-columns: 4fr .5fr;
   border: 1px solid #ccc;
   margin-right: 10px;
   padding: 15px;
@@ -98,7 +99,7 @@
 .personale-in-cantiere-grid2 {
   display: grid;
   grid-template-columns: 4fr .5fr .5fr;
-  flex: 3;
+  flex: 2;
   border: 1px solid #ccc;
   padding: 15px;
 }
@@ -119,6 +120,7 @@
   border: 1px solid #ccc;
   display: flex;
   align-items: center; /* Centra verticalmente */
+  margin-bottom: 1.5px;
 }
 
 select {
@@ -127,8 +129,8 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-/* 
-button {
+
+.personale-cantiere-button {
   padding: 8px 15px;
   background-color: #007bff;
   border: none;
@@ -137,14 +139,41 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.personale-cantiere-button:hover {
   background-color: #0056b3;
-} */
+}
 
 .cantiere-grouped-grid {
   display: flex;
   padding: 10px;
+}
 
+.griglia-mansione0 {
+  border-left: 4px solid #f44336;
+}
+
+.griglia-mansione1 {
+  border-left: 4px solid #9c27b0;
+}
+
+.griglia-mansione2 {
+  border-left: 4px solid #2196f3;
+}
+
+.griglia-mansione3 {
+  border-left: 4px solid #4caf50;
+}
+
+.griglia-mansione4 {
+  border-left: 4px solid #ffeb3b;
+}
+
+.griglia-mansione5 {
+  border-left: 4px solid #ff9800;
+}
+
+.griglia-mansione6 {
+  border-left: 4px solid #795548;
 }
 
   

@@ -1,5 +1,5 @@
 import React from "react";
-import "./card-mezzi.css";
+import "./card-personale.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,

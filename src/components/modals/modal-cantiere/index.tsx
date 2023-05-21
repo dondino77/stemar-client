@@ -43,7 +43,7 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({ onClose }) => {
   const handleConfirm = () => {};
 
   return (
-    <div className={`modal open`} onClick={onClose}>
+    <div className={`modal open`}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="tabs">
           <Tab
@@ -58,6 +58,8 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({ onClose }) => {
             activeTab={activeTab}
             onClick={handleTabClick}
           />
+          <Tab label="Amministrazione" activeTab={activeTab} onClick={handleTabClick} />
+
           <Tab label="SAL" activeTab={activeTab} onClick={handleTabClick} />
           <Tab
             label="Riepilogo"
