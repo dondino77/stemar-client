@@ -3,26 +3,21 @@ import "./cardCantiere.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarDays,
-  faEllipsisVertical,
   faEye,
+  faEllipsisVertical
 } from "@fortawesome/free-solid-svg-icons";
+import { Cantiere } from "../../../reducers/cantieri/types";
 
 interface CardCantiereProps {
-  title: string;
-  description: string;
-  content: string;
-  selected?: boolean;
-  onSelected: (id: string) => void;
-  error?: boolean;
+  cantiere: Cantiere,
+  onDetail: (cantiere: Cantiere) => void
+  onRDL: () => void
 }
 
 const CardCantiere: React.FC<CardCantiereProps> = ({
-  title,
-  description,
-  content,
-  selected = false,
-  error = true,
-  onSelected,
+  cantiere,
+  onDetail,
+  onRDL
 }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -48,19 +43,17 @@ const CardCantiere: React.FC<CardCantiereProps> = ({
 
   return (
     <div
-      className={`card ${selected ? "selected" : ""} `}
-      onClick={() => onSelected(content)}
-    >
-      <div className={`${error ? "red-line" : "green-line"}`}></div>
-      <h2 className="card-title">{title}</h2>
-      <p className="card-description">{description}</p>
-      <p className="card-content">{content}</p>
+      className={`card`}>
+      <div className={`${cantiere.error ? "red-line" : "green-line"}`}></div>
+      <h2 className="card-title">{cantiere.committente}</h2>
+      <p className="card-description">{cantiere.impresa}</p>
+      <p className="card-content">{cantiere.preventivo.toString()}</p>
       <div className="card-bottom-bar">
         <div className="left-buttons">
-          <button className="left-button">
+          <button className="left-button" onClick={() => onDetail(cantiere)}>
             <FontAwesomeIcon icon={faEye} />
           </button>
-          <button className="left-button">
+          <button className="left-button" onClick={() => onRDL()}>
             <FontAwesomeIcon icon={faCalendarDays} />
           </button>
         </div>
@@ -71,7 +64,6 @@ const CardCantiere: React.FC<CardCantiereProps> = ({
           {isMenuOpen && (
             <div className="menu" ref={menuRef} >
               <button className="menu-item">Archivia</button>
-              <button className="menu-item">Modifica</button>
             </div>
           )}
         </div>

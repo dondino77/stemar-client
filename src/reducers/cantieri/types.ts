@@ -26,7 +26,7 @@ export interface Cantiere {
     impresa: string;
     preventivo: number;
     durataGG: number;
-    error: boolean;
+    error?: boolean;
     rdl?: RDL[];
   }
   

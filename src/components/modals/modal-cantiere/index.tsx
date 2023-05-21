@@ -1,77 +1,112 @@
 import React, { useState } from "react";
-import "./modalCantiere.css";
-import PersonaleCantiere from "./personale-cantiere";
-
-interface TabProps {
-  label: string;
-  activeTab: string;
-  onClick: (label: string) => void;
-}
-
-const Tab: React.FC<TabProps> = ({ label, activeTab, onClick }) => {
-  const isActive = activeTab === label;
-  return (
-    <div
-      className={`tab ${isActive ? "active" : ""}`}
-      onClick={() => onClick(label)}
-    >
-      {label}
-    </div>
-  );
-};
-
-const Mezzi = () => {
-  return <div>Contenuto della tab Mezzi</div>;
-};
-
-
-const Materiali = () => {
-  return <div>Contenuto della tab Materiali</div>;
-};
+import "./modal-personale.css";
+import { v4 as uuidv4 } from "uuid";
+import { Cantiere } from "../../../reducers/cantieri/types";
 
 interface ModalCantiereProps {
+  cantiere?: Cantiere;
   onClose: () => void;
+  onSalva: (cantiere: Cantiere) => void;
 }
 
-const ModalCantiere: React.FC<ModalCantiereProps> = ({ onClose }) => {
-  const [activeTab, setActiveTab] = useState("Personale");
+const ModalCantiere: React.FC<ModalCantiereProps> = ({
+  onClose,
+  onSalva,
+  cantiere,
+}) => {
+  const [committente, setCommittente] = useState(cantiere?.committente || "");
+  const [luogo, setLuogo] = useState(cantiere?.luogo || "");
+  const [oggettoLavori, setOggettoLavori] = useState(
+    cantiere?.oggettoLavori || ""
+  );
+  const [impresa, setImpresa] = useState(cantiere?.impresa || "");
+  const [preventivo, setPreventivo] = useState(cantiere?.preventivo || 0);
+  const [durataGG, setDurataGG] = useState(cantiere?.durataGG || 0);
 
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
+  const handleConfirm = () => {
+    onSalva({
+      id: uuidv4(),
+      committente,
+      luogo,
+      oggettoLavori,
+      impresa,
+      preventivo,
+      durataGG,
+      error: false
+    });
   };
 
-  const handleConfirm = () => {};
-
   return (
-    <div className={`modal open`}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="tabs">
-          <Tab
-            label="Personale"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
-          <Tab label="Mezzi" activeTab={activeTab} onClick={handleTabClick} />
-
-          <Tab
-            label="Materiali"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
-          <Tab label="Amministrazione" activeTab={activeTab} onClick={handleTabClick} />
-
-          <Tab label="SAL" activeTab={activeTab} onClick={handleTabClick} />
-          <Tab
-            label="Riepilogo"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
+    <div className="cantiere-modal">
+      <div className="cantiere-modal-content">
+        <h2>Gestione Cantiere</h2>
+        <div className="cantiere-form-field">
+          <label>
+            Committente
+            <input
+              type="text"
+              value={committente}
+              onChange={(e) => setCommittente(e.target.value)}
+            />
+          </label>
         </div>
 
-        <div className="tab-content">
-          {activeTab === "Mezzi" && <Mezzi />}
-          {activeTab === "Personale" && <PersonaleCantiere />}
-          {activeTab === "materiali" && <Materiali />}
+        <div className="cantiere-form-field">
+          <label>
+            Luogo
+            <input
+              type="text"
+              value={luogo}
+              onChange={(e) => setLuogo(e.target.value)}
+            />
+          </label>
+        </div>
+
+        <div className="cantiere-form-field">
+          <label>
+            Oggetto lavori
+            <input
+              type="text"
+              value={oggettoLavori}
+              onChange={(e) => setOggettoLavori(e.target.value)}
+            />
+          </label>
+        </div>
+
+        <div className="cantiere-form-field">
+          <label>
+            Impresa
+            <input
+              type="text"
+              value={impresa}
+              onChange={(e) => setImpresa(e.target.value)}
+            />
+          </label>
+        </div>
+
+        <div className="cantiere-form-field-group">
+          <div className="cantiere-form-field">
+            <label>
+              Preventivo
+              <input
+                type="number"
+                step="0.01"
+                value={preventivo}
+                onChange={(e) => setPreventivo(parseFloat(e.target.value))}
+              />
+            </label>
+          </div>
+          <div className="cantiere-form-field">
+            <label>
+              Durata Giorni
+              <input
+                type="number"
+                step="1"
+                value={durataGG}
+                onChange={(e) => setDurataGG(parseFloat(e.target.value))}
+              />
+            </label>
+          </div>
         </div>
         <div className="cantiere-modal-bottom-bar">
           <button className="cantiere-btn-cancel" onClick={onClose}>
