@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    
   }
   
   .login-form {
@@ -37,3 +38,8 @@
     background-color: #0056b3;
   }
   
+  .logo {
+    width: 200px; /* Larghezza desiderata */
+    height: auto; /* L'altezza si adatterà proporzionalmente alla larghezza */
+    margin-bottom: 10px; /* Margine inferiore per separare il logo dagli altri elementi */
+  }

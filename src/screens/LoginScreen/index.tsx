@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './login.css';
+import "./login.css";
 
 interface LoginPageProps {
   onLogin: () => void;
 }
 
-
-const LoginPage: React.FC<LoginPageProps> = ({
-  onLogin,
-}) => {
-
+const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
@@ -26,14 +22,19 @@ const LoginPage: React.FC<LoginPageProps> = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onLogin();    
+    onLogin();
     navigate("/home");
   };
 
-
   return (
     <div className="login-page">
-       <form onSubmit={handleSubmit} className="login-form">
+      <img
+        src="http://www.stemarcostruzioni.it/wp-content/uploads/2016/03/STEMAR_2021_logo_no-sito_2021_solo.png"
+        alt="Logo azienda"
+        className="logo"
+      />
+
+      <form onSubmit={handleSubmit} className="login-form">
         <input
           type="text"
           placeholder="Username"

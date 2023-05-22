@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./modalCantiere.css";
 import PersonaleCantiere from "./personale-cantiere";
+import MezziCantiere from "./mezzi-cantiere";
 
 interface TabProps {
   label: string;
@@ -45,6 +46,17 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   return (
     <div className={`modal open`}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="cantiere-rdl-modal-group-data">
+          <label>
+            Data
+            <input
+              type="date"
+              className="cantiere-rdl-modal-data"
+              // value={dataNascita}
+              // onChange={(e) => setDataNascita(e.target.value)}
+            />
+          </label>
+        </div>
         <div className="tabs">
           <Tab
             label="Personale"
@@ -69,7 +81,7 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
         </div>
 
         <div className="tab-content">
-          {activeTab === "Mezzi" && <Mezzi />}
+          {activeTab === "Mezzi" && <MezziCantiere />}
           {activeTab === "Personale" && <PersonaleCantiere />}
           {activeTab === "materiali" && <Materiali />}
         </div>
