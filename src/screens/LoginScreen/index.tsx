@@ -28,12 +28,13 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
 
   return (
     <div className="login-page">
-      <img
-        src="http://www.stemarcostruzioni.it/wp-content/uploads/2016/03/STEMAR_2021_logo_no-sito_2021_solo.png"
-        alt="Logo azienda"
-        className="logo"
-      />
-
+      <div className="logo-container">
+        <img
+          src="http://www.stemarcostruzioni.it/wp-content/uploads/2016/03/STEMAR_2021_logo_no-sito_2021_solo.png"
+          alt="Logo azienda"
+          className="logo"
+        />
+      </div>
       <form onSubmit={handleSubmit} className="login-form">
         <input
           type="text"

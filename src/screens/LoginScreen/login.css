@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    
+    flex-direction: column;
   }
   
   .login-form {
@@ -39,7 +39,7 @@
   }
   
   .logo {
-    width: 200px; /* Larghezza desiderata */
+    width: 300px; /* Larghezza desiderata */
     height: auto; /* L'altezza si adatterà proporzionalmente alla larghezza */
     margin-bottom: 10px; /* Margine inferiore per separare il logo dagli altri elementi */
   }

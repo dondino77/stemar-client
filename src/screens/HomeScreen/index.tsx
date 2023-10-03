@@ -6,17 +6,19 @@ import { logout } from "../../reducers/auth";
 import CantieriScreen from "../CantieriScreen";
 import MezziScreen from "../MezziScreen";
 import PersonaleScreen from "../PersonaleScreen";
+import PlanScreen from "../Plan";
 
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = () => {
   const dispatch = useDispatch();
   const [screenSelected, setScreenSelected] = useState<
-    "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare"
-  >("cantieri");
+    "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare" | "plan"
+  >("plan");
 
 
-  const handleSelectScreen = (txt: "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare") => {
+  const handleSelectScreen = (txt: "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare" | "plan") => {
+    console.log('SEL', txt)
     setScreenSelected(txt);
   };
 
@@ -25,12 +27,12 @@ const Home: React.FC<HomeProps> = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <Toolbar onLogout={handleLogout} onSelectScreen={handleSelectScreen} />
       <div className="page-container">
-
         {/* <button onClick={handleOpenModal}>Apri Modale</button> */}
         <div>
+          {screenSelected === "plan" && <PlanScreen />}
           {screenSelected === "cantieri" && <CantieriScreen />}
           {screenSelected === "mezzi" && <MezziScreen />}
           {screenSelected === "personale" && <PersonaleScreen />}
