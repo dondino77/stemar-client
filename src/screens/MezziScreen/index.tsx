@@ -29,7 +29,18 @@ const MezziScreen: React.FC<MezziScreenProps> = () => {
     setIsModalOpen(false);
   };
 
+  const apiMezzo = async (values: Mezzo) => {
+    const loggedInResponse = await fetch("http://localhost:3001/mezzi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const loggedIn = await loggedInResponse.json();
+    console.log('loggedIn', loggedIn)
+  };
+
   const handleSalva = (mezzo: Mezzo) => {
+    apiMezzo(mezzo)
     dispatch(addMezzo(mezzo));
     setIsModalOpen(false);
   };

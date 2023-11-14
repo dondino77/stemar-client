@@ -2,15 +2,16 @@
     display: flex;
     flex-wrap: wrap;
     padding: 10px;
-
   }
 
   .cantieri-container{
     border: 1px solid #ccc;
     border-radius: 10px;
-    height: 100vh;
+    /* height: 100vh; */
     background-color: white;
     box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.2);
+    overflow: auto;
+
   }
     
   .icon {
