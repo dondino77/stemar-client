@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./modal-personale.css";
-import { v4 as uuidv4 } from "uuid";
 import { Cantiere } from "../../../reducers/cantieri/types";
 
 interface ModalCantiereProps {
@@ -25,7 +24,7 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({
 
   const handleConfirm = () => {
     onSalva({
-      id: uuidv4(),
+      id: cantiere?._id || '',
       committente,
       luogo,
       oggettoLavori,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Toolbar from "../../components/toolbar";
 import "./home.css";
 import { useDispatch } from "react-redux";
@@ -7,24 +7,34 @@ import CantieriScreen from "../CantieriScreen";
 import MezziScreen from "../MezziScreen";
 import PersonaleScreen from "../PersonaleScreen";
 import PlanScreen from "../Plan";
+import useHomeHook from "./useHookHome";
 
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = () => {
   const dispatch = useDispatch();
+
+  const { getCantieri, getMezzi, getPersonale } = useHomeHook();
+
   const [screenSelected, setScreenSelected] = useState<
     "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare" | "plan"
   >("plan");
 
 
   const handleSelectScreen = (txt: "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare" | "plan") => {
-    console.log('SEL', txt)
     setScreenSelected(txt);
   };
 
   const handleLogout = () => {
     dispatch(logout());
   };
+
+  useEffect(() => {
+    getPersonale();
+    getCantieri();
+    getMezzi();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="container">

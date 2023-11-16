@@ -4,46 +4,7 @@ import { createPersonale, getPersonale, updatePersonale } from './actions';
 
 
 const initialState: PersonaleReducerType = {
-  personaleList: [{
-    id:'1',
-    nome: 'Nome1',
-    cognome: 'Cognome1',
-    dataNascita: '',
-    coefficiente: 1,
-    idMansione: 1,
-    mansione: 'Intonacatore/Pittore',
-    manovale: true,
-  },
-  {
-    id:'2',
-    nome: 'Nome2',
-    cognome: 'Cognome2',
-    dataNascita: '',
-    coefficiente: 2,
-    idMansione: 2,
-    mansione: 'Intonacatore/Pittore',
-    manovale: true,
-  },
-  {
-    id:'3',
-    nome: 'Nome3',
-    cognome: 'Cognome3',
-    dataNascita: '',
-    coefficiente: 3,
-    idMansione: 3,
-    mansione: 'Intonacatore/Pittore',
-    manovale: true,
-  },
-  {
-    id:'4',
-    nome: 'Nome4',
-    cognome: 'Cognome4',
-    dataNascita: '',
-    coefficiente: 4,
-    idMansione: 4,
-    mansione: 'Intonacatore/Pittore',
-    manovale: true,
-  }],
+  personaleList: [],
   form: {
     id: '',
     nome: '',

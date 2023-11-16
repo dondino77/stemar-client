@@ -17,12 +17,12 @@ const CardPersonale: React.FC<CardPersonaleProps> = ({
   onDetail,
 }) => {
   return (
-    <div className={`card`}>
+    <div className={`card-personale`}>
       <div className={`mansione${persona.idMansione}`}></div>
 
       <h2 className="card-title">{`${persona.nome || ''} ${persona.cognome || ''}`}</h2>
-      <p className="card-description">{`${persona.mansione || ''} ${persona.manovale ? '- Man' : ''}`}</p>
-      <p className="card-content">{`Coefficiente ${persona.coefficiente?.toString() || 0}`}</p>
+      <p className="card-description">{`Mansione: ${persona.mansione || ''} ${persona.manovale ? '- Man' : ''}`}</p>
+      <p className="card-content">{`Coefficiente: ${persona.coefficiente?.toString() || 0}`}</p>
       <div className="card-bottom-bar">
         <div className="left-buttons">
           <button className="left-button" onClick={() => onDetail(persona)}>

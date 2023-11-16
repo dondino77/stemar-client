@@ -25,7 +25,7 @@ interface ModalRDLCantiereProps {
 
 const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   //CANTIERI
-  const cantieri = useSelector((state: RootState) => state.cantieri.cantieri);
+  const cantieri = useSelector((state: RootState) => state.cantieri.cantieriList);
   const [cantieriFiltrati, setCantieriFiltrati] = useState<Cantiere[]>([]);
   const [cantieriInPlan, setCantieriInPlan] = useState<CantieriPlan[]>([]);
   const [planSelect, setPlanSelect] = useState<CantieriPlan | undefined>(
@@ -36,7 +36,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
     const cantieriTmp = cantieri.filter(
       (item1: Cantiere) =>
         !cantieriInPlan.some(
-          (item2: CantieriPlan) => item2.cantiere.id === item1.id
+          (item2: CantieriPlan) => item2.cantiere._id === item1._id
         )
     );
     setCantieriFiltrati(cantieriTmp);
@@ -62,7 +62,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
 
   const addMezzoInPlan = (item: MezziPlan) => {
     const cantiereIndex = cantieriInPlan.findIndex(
-      (cantiere) => cantiere.cantiere.id === planSelect?.cantiere.id
+      (cantiere) => cantiere.cantiere._id === planSelect?.cantiere._id
     );
 
     if (cantiereIndex !== -1) {
@@ -104,8 +104,8 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   const convertPersonaToPersonalePlan = (persona: Persona): PersonalePlan => {
     // Esegui la conversione qui
     const personalePlan: PersonalePlan = {
-      id: persona.id,
-      idPersonale: persona.id, // Supponiamo che ci sia una proprietà 'id' in 'Persona'
+      id: persona._id,
+      idPersonale: persona._id, // Supponiamo che ci sia una proprietà 'id' in 'Persona'
       personale: `${persona.nome} ${persona.cognome}`, // Supponiamo che ci sia una proprietà 'nome' in 'Persona'
       ore: 0, // Inserisci un valore predefinito per 'ore' o usa il valore corretto
     };

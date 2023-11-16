@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './reducers/auth';
-import cantieriReducer from './reducers/cantieri';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { mezziReducer } from './reducers/mezzi';
 import { personaleReducer } from './reducers/personale';
+import { cantieriReducer } from './reducers/cantieri';
 
 export const store = configureStore({
   reducer: {

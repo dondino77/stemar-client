@@ -43,11 +43,19 @@ const CardCantiere: React.FC<CardCantiereProps> = ({
 
   return (
     <div
-      className={`card`}>
+      className={`card-cantiere`}>
       <div className={`${cantiere.error ? "red-line" : "green-line"}`}></div>
-      <h2 className="card-title">{cantiere.committente}</h2>
-      <p className="card-description">{cantiere.impresa}</p>
-      <p className="card-content">{cantiere.preventivo.toString()}</p>
+      <h2 className="card-title">{`${cantiere.committente || ''}`}</h2>
+      <p className="card-description">{`Impresa: ${cantiere.committente || ''}`}</p>
+      <p className="card-description">{`Luogo: ${cantiere.luogo || ''}`}</p>
+      <p className="card-description">{`Durata GG: ${cantiere.durataGG || ''}`}</p>
+      <p className="card-content">{`Preventivo: € ${
+        cantiere.preventivo?.toLocaleString("it-IT", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }) || 0
+      }`}</p>
+
       <div className="card-bottom-bar">
         <div className="left-buttons">
           <button className="left-button" onClick={() => onDetail(cantiere)}>

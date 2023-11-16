@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import CardCantiere from "../../components/cards/card-cantiere";
 import "./cantieri.css";
-import { RootState } from "../../store";
 import { Cantiere } from "../../reducers/cantieri/types";
-import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModalRDLCantiere from "../../components/modals/modal-rdl-cantiere";
 import ModalCantiere from "../../components/modals/modal-cantiere";
-import { addCantiere } from "../../reducers/cantieri";
+import useCantieriHook from "./useHookCantieri";
 
 interface CantieriScreenProps {}
 
 const CantieriScreen: React.FC<CantieriScreenProps> = () => {
-  const cantieri = useSelector((state: RootState) => state.cantieri.cantieri);
+  const { createCantiere, cantieri, updateCantiere } = useCantieriHook();
+
   const [isModalRDLOpen, setIsModalRDLOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,8 +20,11 @@ const CantieriScreen: React.FC<CantieriScreenProps> = () => {
     Cantiere | undefined
   >(undefined);
 
-  const dispatch = useDispatch();
-
+  // useEffect(() => {
+  //   getCantieri();
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+  
   const handleOpenModalRDL = () => {
     setIsModalRDLOpen(true);
   };
@@ -41,7 +43,11 @@ const CantieriScreen: React.FC<CantieriScreenProps> = () => {
   };
 
   const handleSalva = (cantiere: Cantiere) => {
-    dispatch(addCantiere(cantiere));
+    if (cantiere.id !== "") {
+      updateCantiere(cantiere)
+    } else {
+      createCantiere(cantiere);
+    }
     setIsModalOpen(false);
   };
 

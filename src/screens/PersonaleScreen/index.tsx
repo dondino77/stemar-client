@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./personale.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -10,17 +10,17 @@ import usePersonaleHook from "./useHookPersonale";
 interface PersonaleScreenProps {}
 
 const PersonaleScreen: React.FC<PersonaleScreenProps> = () => {
-  const { createPersonale, personale, getPersonale, updatePersonale } = usePersonaleHook();
+  const { createPersonale, personale, updatePersonale } = usePersonaleHook();
 
   const [personaSelected, setPersonaSelected] = useState<Persona | undefined>(
     undefined
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    getPersonale();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   getPersonale();
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   
   const handleOpenModal = () => {
     setPersonaSelected(undefined);
@@ -46,15 +46,15 @@ const PersonaleScreen: React.FC<PersonaleScreenProps> = () => {
   };
 
   return (
-    <div className="cantieri-container">
-      <div className="toolbar-cantieri">
+    <div className="personale-container">
+      <div className="toolbar-personale">
         <button className="button" onClick={handleOpenModal}>
           <FontAwesomeIcon className="icon" icon={faPlus} />
           Nuovo
         </button>
       </div>
 
-      <div className={"cantieri-line"}></div>
+      <div className={"personale-line"}></div>
 
       <div className="page">
         {personale?.map((card: Persona, index) => (

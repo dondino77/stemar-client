@@ -15,25 +15,25 @@ const CardMezzi: React.FC<CardMezziProps> = ({ mezzo, onDetail }) => {
       <div className={"green-line"}></div>
 
       <h2 className="card-title">{mezzo.nome || ""}</h2>
-      <p className="card-description">{`Targa ${mezzo.targa}`}</p>
-      <p className="card-description">{`Scadenza RC ${
+      <p className="card-description">{`Targa: ${mezzo.targa}`}</p>
+      <p className="card-description">{`Scadenza RC: ${
         mezzo.dataScadenzaAssicurazione
-          ? new Date(mezzo.dataScadenzaAssicurazione)
-              .toISOString()
-              .split("T")[0]
+          ? new Date(mezzo.dataScadenzaAssicurazione).toLocaleDateString(
+              "it-IT"
+            )
           : ""
       }`}</p>
-      <p className="card-description">{`Scadenza bollo ${
+      <p className="card-description">{`Scadenza bollo: ${
         mezzo.dataScadenzaBollo
-          ? new Date(mezzo.dataScadenzaBollo).toISOString().split("T")[0]
+          ? new Date(mezzo.dataScadenzaBollo).toLocaleDateString("it-IT")
           : ""
       }`}</p>
-      <p className="card-description">{`Prossima revisione ${
+      <p className="card-description">{`Prossima revisione: ${
         mezzo.dataProssimaRevisione
-          ? new Date(mezzo.dataProssimaRevisione).toISOString().split("T")[0]
+          ? new Date(mezzo.dataProssimaRevisione).toLocaleDateString("it-IT")
           : ""
       }`}</p>
-      <p className="card-content">{`Costo Orario € ${
+      <p className="card-content">{`Costo Orario: € ${
         mezzo?.costoOrario?.toLocaleString("it-IT", {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,

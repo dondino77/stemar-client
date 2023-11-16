@@ -1,11 +1,11 @@
-.card {
+.card-cantiere {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
-  margin: 10px;
+  margin: 5px;
   cursor: pointer;
-  width: 150px;
-  height: 200px;
+  width: 350px;
+  height: 250px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: relative; /* Aggiungi questa riga per consentire il posizionamento relativo */
 }

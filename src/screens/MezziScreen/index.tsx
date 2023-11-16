@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./mezzi.css";
 import ModalMezzi from "../../components/modals/modal-mezzi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,17 +10,17 @@ import useMezziHook from "./useHookMezzi";
 interface MezziScreenProps {}
 
 const MezziScreen: React.FC<MezziScreenProps> = () => {
-  const { createMezzo, mezzi, getMezzi, updateMezzo } = useMezziHook();
+  const { createMezzo, mezzi, updateMezzo } = useMezziHook();
   const [mezzoSelected, setMezzoSelected] = useState<Mezzo | undefined>(
     undefined
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    getMezzi();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   getMezzi();
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const handleOpenModal = () => {
     setMezzoSelected(undefined);

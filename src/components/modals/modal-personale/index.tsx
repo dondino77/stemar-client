@@ -19,7 +19,7 @@ const ModalPersonale: React.FC<ModalPersonaleProps> = ({
   const [coefficiente, setCoefficiente] = useState(persona?.coefficiente || 0);
   const [mansione, setMansione] = useState<{ id: number; value: string }>({
     id: persona?.idMansione || 0,
-    value: persona?.mansione || "",
+    value: persona?.mansione || "Intonacatore/Pittore",
   });
   const [manovale, setManovale] = useState(persona?.manovale || false);
 
@@ -66,7 +66,7 @@ const ModalPersonale: React.FC<ModalPersonaleProps> = ({
             Data di nascita
             <input
               type="date"
-              value={dataNascita}
+              value={dataNascita ? new Date(dataNascita).toISOString().split('T')[0] : ''}
               onChange={(e) => setDataNascita(e.target.value)}
             />
           </label>

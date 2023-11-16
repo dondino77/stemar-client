@@ -56,7 +56,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
               <button
                 className="personale-plan-button"
                 onClick={() =>
-                  onDeletePersonale(cantierePlan.cantiere.id, item.id)
+                  onDeletePersonale(cantierePlan.cantiere.id, item._id)
                 }
               >
                 <FontAwesomeIcon icon={faRemove} />
@@ -67,7 +67,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
 
         {(cantierePlan?.mezzi?.length || 0) > 0 && <h4>Mezzi</h4>}
 
-        {cantierePlan.mezzi?.map((item: Mezzo, index) => (
+        {/* {cantierePlan.mezzi?.map((item: Mezzo, index) => (
           <div className="personale-row">
             <div
               className={`personale-in-plan-row-text`}
@@ -87,7 +87,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
               </button>
             </div>
           </div>
-        ))}
+        ))} */}
       </div>
 
       <div className="card-bottom-bar">
