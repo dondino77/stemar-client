@@ -1,14 +1,23 @@
 export interface Mezzo {
   id: string;
+  _id?: string;
   nome?: string;
   targa?: string;
   dataScadenzaAssicurazione?: string;
   dataScadenzaBollo?: string;
   dataProssimaRevisione?: string;
-  costoKm?: number;
+  costoOrario?: number;
+}
+
+export interface MezziReducerType{
+  mezziList: Mezzo[];
+  form: Mezzo;
 }
 
 export interface MezziState {
-  mezzi: Mezzo[];
-  form: Mezzo;
+  mezzi: MezziReducerType;
 }
+
+export type ThunkApiConfig = {
+  state: MezziState;
+};

@@ -10,7 +10,7 @@ interface PersonaleCantiereProps {}
 
 const PersonaleCantiere: React.FC<PersonaleCantiereProps> = () => {
   const personale = useSelector(
-    (state: RootState) => state.personale.personale
+    (state: RootState) => state.personale.personaleList
   );
   const [personaleFiltrato, setPersonaleFiltrato] = useState<Persona[]>([]);
   const [personaleInCantiere, setPersonaleInCantiere] = useState<Persona[]>([]);

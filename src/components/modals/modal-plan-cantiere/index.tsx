@@ -58,7 +58,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   }, [cantieriInPlan]);
 
   //MEZZI
-  const mezzi = useSelector((state: RootState) => state.mezzi.mezzi);
+  const mezzi = useSelector((state: RootState) => state.mezzi.mezziList);
 
   const addMezzoInPlan = (item: MezziPlan) => {
     const cantiereIndex = cantieriInPlan.findIndex(
@@ -98,7 +98,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
 
   //PERSONALE
   const personale = useSelector(
-    (state: RootState) => state.personale.personale
+    (state: RootState) => state.personale.personaleList
   );
 
   const convertPersonaToPersonalePlan = (persona: Persona): PersonalePlan => {

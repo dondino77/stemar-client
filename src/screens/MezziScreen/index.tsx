@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./mezzi.css";
 import ModalMezzi from "../../components/modals/modal-mezzi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import CardMezzi from "../../components/cards/card-mezzi";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
 import { Mezzo } from "../../reducers/mezzi/types";
-import { addMezzo } from "../../reducers/mezzi";
+import useMezziHook from "./useHookMezzi";
 
 interface MezziScreenProps {}
 
 const MezziScreen: React.FC<MezziScreenProps> = () => {
-  const mezzi = useSelector((state: RootState) => state.mezzi.mezzi);
+  const { createMezzo, mezzi, getMezzi, updateMezzo } = useMezziHook();
   const [mezzoSelected, setMezzoSelected] = useState<Mezzo | undefined>(
     undefined
   );
-  const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    getMezzi();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOpenModal = () => {
     setMezzoSelected(undefined);
@@ -29,19 +31,12 @@ const MezziScreen: React.FC<MezziScreenProps> = () => {
     setIsModalOpen(false);
   };
 
-  const apiMezzo = async (values: Mezzo) => {
-    const loggedInResponse = await fetch("http://localhost:3001/mezzi", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
-    const loggedIn = await loggedInResponse.json();
-    console.log('loggedIn', loggedIn)
-  };
-
   const handleSalva = (mezzo: Mezzo) => {
-    apiMezzo(mezzo)
-    dispatch(addMezzo(mezzo));
+    if (mezzo.id !== "") {
+      updateMezzo(mezzo)
+    } else {
+      createMezzo(mezzo);
+    }
     setIsModalOpen(false);
   };
 
@@ -51,15 +46,15 @@ const MezziScreen: React.FC<MezziScreenProps> = () => {
   };
 
   return (
-    <div className="cantieri-container">
-      <div className="toolbar-cantieri">
+    <div className="mezzi-container">
+      <div className="toolbar-mezzi">
         <button className="button" onClick={handleOpenModal}>
           <FontAwesomeIcon className="icon" icon={faPlus} />
           Nuovo mezzo
         </button>
       </div>
 
-      <div className={"cantieri-line"}></div>
+      <div className={"mezzi-line"}></div>
 
       <div className="page">
         {mezzi?.map((card: Mezzo, index) => (

@@ -1,25 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./personale.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModalPersonale from "../../components/modals/modal-personale";
 import { Persona } from "../../reducers/personale/types";
-import { addPersona } from "../../reducers/personale";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
 import CardPersonale from "../../components/cards/card-personale";
+import usePersonaleHook from "./useHookPersonale";
 
 interface PersonaleScreenProps {}
 
 const PersonaleScreen: React.FC<PersonaleScreenProps> = () => {
-  const dispatch = useDispatch();
-  const personale = useSelector((state: RootState) => state.personale.personale);
+  const { createPersonale, personale, getPersonale, updatePersonale } = usePersonaleHook();
 
   const [personaSelected, setPersonaSelected] = useState<Persona | undefined>(
     undefined
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    getPersonale();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
   const handleOpenModal = () => {
     setPersonaSelected(undefined);
     setIsModalOpen(true);
@@ -30,7 +32,11 @@ const PersonaleScreen: React.FC<PersonaleScreenProps> = () => {
   };
 
   const handleSalva = (persona: Persona) => {
-    dispatch(addPersona(persona));
+    if (persona.id !== "") {
+      updatePersonale(persona)
+    } else {
+      createPersonale(persona);
+    }
     setIsModalOpen(false);
   };
 

@@ -9,7 +9,7 @@ import { Mezzo } from "../../../reducers/mezzi/types";
 interface MezziCantiereProps {}
 
 const MezziCantiere: React.FC<MezziCantiereProps> = () => {
-  const mezzi = useSelector((state: RootState) => state.mezzi.mezzi);
+  const mezzi = useSelector((state: RootState) => state.mezzi.mezziList);
   const [mezziFiltrati, setMezziFiltrati] = useState<Mezzo[]>([]);
   const [mezziInCantiere, setMezziInCantiere] = useState<Mezzo[]>([]);
 

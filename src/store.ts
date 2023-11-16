@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './reducers/auth';
-import mezziReducer from './reducers/mezzi';
-import personaleReducer from './reducers/personale';
 import cantieriReducer from './reducers/cantieri';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { mezziReducer } from './reducers/mezzi';
+import { personaleReducer } from './reducers/personale';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     auth: authReducer,
     cantieri: cantieriReducer,
@@ -14,10 +14,9 @@ const store = configureStore({
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
 
-export default store;
-
+// hooks redux per dispatch e selector tipizzati
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector;

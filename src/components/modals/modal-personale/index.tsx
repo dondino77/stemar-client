@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./modal-personale.css";
 import { Persona } from "../../../reducers/personale/types";
-import { v4 as uuidv4 } from "uuid";
 
 interface ModalPersonaleProps {
   persona?: Persona;
@@ -26,7 +25,7 @@ const ModalPersonale: React.FC<ModalPersonaleProps> = ({
 
   const handleConfirm = () => {
     onSalva({
-      id: uuidv4(),
+      id: persona?._id || '',
       nome,
       cognome,
       dataNascita,

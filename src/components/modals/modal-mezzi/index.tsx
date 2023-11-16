@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "./modal-mezzi.css";
 import { Mezzo } from "../../../reducers/mezzi/types";
-import { v4 as uuidv4 } from "uuid";
-
 interface ModalMezziProps {
   mezzo?: Mezzo;
   onClose: () => void;
@@ -13,25 +11,25 @@ const ModalMezzi: React.FC<ModalMezziProps> = ({ onClose, mezzo, onSalva }) => {
   const [nome, setNome] = useState(mezzo?.nome || "");
   const [targa, setTarga] = useState(mezzo?.targa || "");
   const [dataScadenzaAssicurazione, setDataScadenzaAssicurazione] = useState(
-    mezzo?.dataScadenzaAssicurazione || ""
+    mezzo?.dataScadenzaAssicurazione
   );
   const [dataScadenzaBollo, setDataScadenzaBollo] = useState(
     mezzo?.dataScadenzaBollo
   );
   const [dataProssimaRevisione, setDataProssimaRevisione] = useState(
-    mezzo?.dataProssimaRevisione || ""
+    mezzo?.dataProssimaRevisione
   );
-  const [costoKm, setCostoKm] = useState(mezzo?.costoKm || 0);
+  const [costoOrario, setCostoOrario] = useState(mezzo?.costoOrario || 0);
 
   const handleConfirm = () => {
     onSalva({
-      id: uuidv4(),
+      id: mezzo?._id || '',
       nome,
       targa,
       dataScadenzaAssicurazione,
       dataScadenzaBollo,
       dataProssimaRevisione,
-      costoKm,
+      costoOrario,
     });
   };
 
@@ -64,7 +62,7 @@ const ModalMezzi: React.FC<ModalMezziProps> = ({ onClose, mezzo, onSalva }) => {
             Data scadenza assicurazione
             <input
               type="date"
-              value={dataScadenzaAssicurazione}
+              value={dataScadenzaAssicurazione ? new Date(dataScadenzaAssicurazione).toISOString().split('T')[0] : ''}
               onChange={(e) => setDataScadenzaAssicurazione(e.target.value)}
             />
           </label>
@@ -74,7 +72,7 @@ const ModalMezzi: React.FC<ModalMezziProps> = ({ onClose, mezzo, onSalva }) => {
             Data scadenza bollo
             <input
               type="date"
-              value={dataScadenzaBollo}
+              value={dataScadenzaBollo ? new Date(dataScadenzaBollo).toISOString().split('T')[0] : ''}
               onChange={(e) => setDataScadenzaBollo(e.target.value)}
             />
           </label>
@@ -84,19 +82,19 @@ const ModalMezzi: React.FC<ModalMezziProps> = ({ onClose, mezzo, onSalva }) => {
             Data prossima revisione
             <input
               type="date"
-              value={dataProssimaRevisione}
+              value={dataProssimaRevisione ? new Date(dataProssimaRevisione).toISOString().split('T')[0] : ''}
               onChange={(e) => setDataProssimaRevisione(e.target.value)}
             />
           </label>
         </div>
         <div className="vehicle-form-field">
           <label>
-            Costo Km
+            Costo Orario
             <input
               type="number"
               step="0.01"
-              value={costoKm}
-              onChange={(e) => setCostoKm(parseFloat(e.target.value))}
+              value={costoOrario}
+              onChange={(e) => setCostoOrario(parseFloat(e.target.value))}
             />
           </label>
         </div>

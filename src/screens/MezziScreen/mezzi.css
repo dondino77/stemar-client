@@ -5,12 +5,13 @@
 
   }
 
-  .cantieri-container{
+  .mezzi-container{
     border: 1px solid #ccc;
     border-radius: 10px;
-    height: 100vh;
+    /* height: 100vh; */
     background-color: white;
     box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.2);
+    overflow: auto;
   }
     
   .icon {
@@ -27,7 +28,7 @@
     cursor: pointer;
   }
 
-  .toolbar-cantieri{
+  .toolbar-mezzi{
     margin: 15px;
   }
     
@@ -35,7 +36,7 @@
     background-color: #0056b3;
   }
 
-  .cantieri-line {
+  .mezzi-line {
     left: 0;
     width: 100%;
     height: 1px;
