@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./plan.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -11,11 +11,12 @@ import ModalRDLCantiere from "../../components/modals/modal-rdl-cantiere";
 interface PlanScreenProps {}
 
 const PlanScreen: React.FC<PlanScreenProps> = () => {
-  const { plan } = usePlanHook();
+  const { plan, getPlan } = usePlanHook();
 
   const [isModalPlanOpen, setIsModalPlanOpen] = useState(false);
   const [isModalRDLOpen, setIsModalRDLOpen] = useState(false);
   const [itemSelected, setItemSelected] = useState<RDLPlan>();
+  const [today, setToday] = useState(getToday());
 
 
   const handleOpenModalPlan = () => {
@@ -28,12 +29,30 @@ const PlanScreen: React.FC<PlanScreenProps> = () => {
 
   const handleOpenModalRDL = (item: RDLPlan) => {
     setIsModalRDLOpen(true);
-    setItemSelected(item)
+    setItemSelected(item);
   };
 
   const handleCloseModalRDL = () => {
     setIsModalRDLOpen(false);
   };
+
+  const getPlanFromData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    getPlan(e.target.value);
+    setToday(e.target.value)
+  };
+
+  function getToday() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  useEffect(() => {
+    setToday(getToday());
+    getPlan(getToday());
+  }, []); 
 
   return (
     <div className="plan-container">
@@ -46,6 +65,18 @@ const PlanScreen: React.FC<PlanScreenProps> = () => {
 
       <div className={"plan-line"}></div>
 
+      <div className="plan-data">
+        <label>
+          Data
+          <input
+            type="date"
+            className="cantiere-plan-modal-data"
+            value={today}
+            onChange={getPlanFromData}
+          />
+        </label>
+      </div>
+
       <div className="page">
         {plan?.rdlList?.map((card: RDLPlan, index) => (
           <CardCantiere
@@ -57,7 +88,13 @@ const PlanScreen: React.FC<PlanScreenProps> = () => {
         ))}
       </div>
       {isModalPlanOpen && <ModalPlanCantiere onClose={handleCloseModalPlan} />}
-      {isModalRDLOpen && <ModalRDLCantiere onClose={handleCloseModalRDL} rdlPlan={itemSelected} assenti={plan?.assenze} />}
+      {isModalRDLOpen && (
+        <ModalRDLCantiere
+          onClose={handleCloseModalRDL}
+          rdlPlan={itemSelected}
+          assenti={plan?.assenze}
+        />
+      )}
     </div>
   );
 };

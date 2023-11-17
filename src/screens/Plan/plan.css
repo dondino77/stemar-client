@@ -41,5 +41,16 @@
     height: 1px;
     background-color: #ccc;
   }
+
+
+.plan-data {
+  bottom: 0;
+  left: 0;
+  width: 250px;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+  margin: 15px;
+}
   
   

@@ -27,7 +27,6 @@ export const callApi = async (
 
   let body: string | undefined;
   
-  console.log('Params', params);
   if (params) {
     body = JSON.stringify(params);
   }

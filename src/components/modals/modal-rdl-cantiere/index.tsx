@@ -48,7 +48,7 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
   };
 
   const personaleTmp = personale?.filter((item1: Persona) =>
-    assenti?.some((item2: Persona) => item2.id !== item1.id)
+    !assenti?.some((item2: Persona) => item2.id === item1.id)
   );
 
   const handleConfirm = () => {};
@@ -103,7 +103,7 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
           {activeTab === "Personale" && (
             <PersonaleCantiere
               personale={personaleTmp || []}
-              personaleIn={personaleTmp || []}
+              personaleIn={rdlPlan?.personale || []}
             />
           )}
           {activeTab === "materiali" && <Materiali />}
