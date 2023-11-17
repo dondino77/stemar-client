@@ -2,20 +2,20 @@ import React from "react";
 import "./cardPlan.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRemove } from "@fortawesome/free-solid-svg-icons";
-import { CantieriPlan, PersonalePlan } from "../../../reducers/plan/types";
-import { Mezzo } from "../../../reducers/mezzi/types";
+import { PersonalePlan, RDLPlan } from "../../../reducers/plan";
+import { Mezzo } from "../../../reducers/mezzi";
 
 interface CardPlanProps {
-  cantierePlan: CantieriPlan;
+  rdlPlan: RDLPlan;
   onDeletePlan: (id: string) => void;
   onDeleteMezzo: (idPlan: string, idMezzo: string) => void;
   onDeletePersonale: (idPlan: string, idPersonale: string) => void;
-  onSelect: (item: CantieriPlan | undefined) => void;
+  onSelect: (item: any | undefined) => void;
   selected: boolean;
 }
 
 const CardPlan: React.FC<CardPlanProps> = ({
-  cantierePlan,
+  rdlPlan,
   onDeletePlan,
   onDeleteMezzo,
   onDeletePersonale,
@@ -24,12 +24,12 @@ const CardPlan: React.FC<CardPlanProps> = ({
 }) => {
 
   const actionDeletePlan = () => {
-    onSelect(selected ? undefined : cantierePlan);
-    onDeletePlan(cantierePlan.cantiere.id);
+    onSelect(selected ? undefined : rdlPlan);
+    onDeletePlan(rdlPlan.id);
   };
 
   const actionSelectPlan = () => {
-    onSelect(selected ? undefined : cantierePlan);
+    onSelect(selected ? undefined : rdlPlan);
   };
 
   return (
@@ -37,17 +37,17 @@ const CardPlan: React.FC<CardPlanProps> = ({
       className={`card ${selected ? "selected" : ""}`}
       onClick={() => actionSelectPlan()}
     >
-      <h2 className="card-title">{cantierePlan.cantiere.committente}</h2>
+      <h2 className="card-title">{rdlPlan.cantiere.committente}</h2>
       <div className="card-content">
-        {(cantierePlan?.personale?.length || 0) > 0 && <h4>Personale</h4>}
+        {(rdlPlan?.personale?.length || 0) > 0 && <h4>Personale</h4>}
 
-        {cantierePlan.personale?.map((item: PersonalePlan, index) => (
+        {rdlPlan.personale?.map((item: PersonalePlan, index) => (
           <div className="personale-row">
             <div
               className={`personale-in-plan-row-text`}
               key={`personale${index}`}
             >
-              {`${item.personale} `}
+              {`${item.nome} ${item.cognome} `}
             </div>
             <div
               className="personale-in-plan-row-button"
@@ -56,7 +56,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
               <button
                 className="personale-plan-button"
                 onClick={() =>
-                  onDeletePersonale(cantierePlan.cantiere.id, item._id)
+                  onDeletePersonale(rdlPlan.id, item.id)
                 }
               >
                 <FontAwesomeIcon icon={faRemove} />
@@ -65,9 +65,9 @@ const CardPlan: React.FC<CardPlanProps> = ({
           </div>
         ))}
 
-        {(cantierePlan?.mezzi?.length || 0) > 0 && <h4>Mezzi</h4>}
+        {(rdlPlan?.mezzi?.length || 0) > 0 && <h4>Mezzi</h4>}
 
-        {/* {cantierePlan.mezzi?.map((item: Mezzo, index) => (
+        {rdlPlan.mezzi?.map((item: Mezzo, index) => (
           <div className="personale-row">
             <div
               className={`personale-in-plan-row-text`}
@@ -81,13 +81,13 @@ const CardPlan: React.FC<CardPlanProps> = ({
             >
               <button
                 className="personale-plan-button"
-                onClick={() => onDeleteMezzo(cantierePlan.cantiere.id, item.id)}
+                onClick={() => onDeleteMezzo(rdlPlan.id, item.id)}
               >
                 <FontAwesomeIcon icon={faRemove} />
               </button>
             </div>
           </div>
-        ))} */}
+        ))}
       </div>
 
       <div className="card-bottom-bar">

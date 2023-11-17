@@ -17,7 +17,7 @@ const initialState: MezziReducerType = {
 export const mezziReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(createMezzo.fulfilled, (state, action) => {
-      state.mezziList.push(action.payload);
+      state.mezziList.push({...action.payload, id: action.payload._id || ''});
     })
     .addCase(createMezzo.pending, (state) => {
       // state.saldiHomepage = initialState.saldiHomepage;
@@ -29,7 +29,10 @@ export const mezziReducer = createReducer(initialState, (builder) => {
       // state.saldiHomepage = initialState.saldiHomepage;
     })
     .addCase(getMezzi.fulfilled, (state, action) => {
-      state.mezziList = action.payload;
+      state.mezziList = action.payload.map((item) => ({
+        ...item,
+        id: item._id || '',
+      }));
     })
     .addCase(getMezzi.pending, (state) => {
       state.mezziList = initialState.mezziList;

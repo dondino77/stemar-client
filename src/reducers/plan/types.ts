@@ -1,33 +1,40 @@
 import { Cantiere } from "../cantieri/types";
+import { Mezzo } from "../mezzi";
+import { Persona } from "../personale";
 
-export interface MezziPlan {
-  _id: string;
-  idMezzo: string;
-  mezzo: string;
+export interface KmPlan {
   km: number;
 }
 
-export interface PersonalePlan {
-  _id: string;
-  idPersonale: string;
-  personale: string;
+export interface OrePlan {
   ore: number;
 }
-
-export interface CantieriPlan {
-  _id?: string;
-  data?: string;
-  cantiere: Cantiere,
-  mezzi?: MezziPlan[],
-  personale?: PersonalePlan[],
+export interface MezziPlan extends Mezzo, KmPlan {
+  // Proprietà aggiuntive o override se necessario
 }
 
-export interface Plan {
+export interface PersonalePlan extends Persona, OrePlan {
+  // Proprietà aggiuntive o override se necessario
+}
+
+export interface RDLPlan {
+  id: string;
+  cantiere: Cantiere,
+  mezzi?: MezziPlan[],
+  personale?: PersonalePlan[],  
+}
+
+export interface PlanReducerType {
   id?: string;
   data?: string;
-  cantieri?: CantieriPlan[],
+  rdlList?: RDLPlan[] | undefined,
+  assenze?: Persona[],
 }
 
 export interface PlanState {
-  plans: Plan[];
+  plan: PlanReducerType;
 }
+
+export type ThunkApiConfig = {
+  state: PlanState;
+};

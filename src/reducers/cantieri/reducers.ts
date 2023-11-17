@@ -18,7 +18,7 @@ const initialState: CantieriReducerType = {
 export const cantieriReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(createCantiere.fulfilled, (state, action) => {
-      state.cantieriList.push(action.payload);
+      state.cantieriList.push({...action.payload, id: action.payload._id || ''});
     })
     .addCase(createCantiere.pending, (state) => {
       // state.saldiHomepage = initialState.saldiHomepage;
@@ -32,7 +32,10 @@ export const cantieriReducer = createReducer(initialState, (builder) => {
       // state.saldiHomepage = initialState.saldiHomepage;
     })
     .addCase(getCantieri.fulfilled, (state, action) => {
-      state.cantieriList = action.payload;
+      state.cantieriList = action.payload.map((item) => ({
+        ...item,
+        id: item._id || '',
+      }));
     })
     .addCase(getCantieri.pending, (state) => {
       state.cantieriList = initialState.cantieriList;

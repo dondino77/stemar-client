@@ -2,16 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./modalCantiere.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus, faUserMinus } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
 import { Persona } from "../../../reducers/personale/types";
 
-interface PersonaleCantiereProps {}
+interface PersonaleCantiereProps {
+  personaleIn: Persona[]
+  personale: Persona[]
+}
 
-const PersonaleCantiere: React.FC<PersonaleCantiereProps> = () => {
-  const personale = useSelector(
-    (state: RootState) => state.personale.personaleList
-  );
+const PersonaleCantiere: React.FC<PersonaleCantiereProps> = ({personaleIn, personale}) => {
   const [personaleFiltrato, setPersonaleFiltrato] = useState<Persona[]>([]);
   const [personaleInCantiere, setPersonaleInCantiere] = useState<Persona[]>([]);
 
@@ -23,13 +21,13 @@ const PersonaleCantiere: React.FC<PersonaleCantiereProps> = () => {
 
   const updatePersonaleFiltrato = () => {
     // Creare un nuovo array3 aggiornato
-    const personaleTmp = personale.filter(
+    const personaleTmp = personale?.filter(
       (item1: Persona) =>
         !personaleInCantiere.some((item2: Persona) => item2.id === item1.id)
     );
 
     // Aggiornare lo stato di array3 con il nuovo array
-    setPersonaleFiltrato(personaleTmp);
+    setPersonaleFiltrato(personaleTmp || []);
   };
 
   const addPersonaInCantiere = (item: Persona) => {
@@ -47,7 +45,12 @@ const PersonaleCantiere: React.FC<PersonaleCantiereProps> = () => {
 
   useEffect(() => {
     updatePersonaleFiltrato();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personaleInCantiere]);
+
+  useEffect(() => {
+    personaleIn && setPersonaleInCantiere(personaleIn);
+  }, [personaleIn]);
 
   //   const array3 = array1.filter(item1 => !array2.some(item2 => item2.id === item1.id));
 

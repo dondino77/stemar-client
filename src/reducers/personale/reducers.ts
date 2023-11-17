@@ -20,7 +20,7 @@ const initialState: PersonaleReducerType = {
   export const personaleReducer = createReducer(initialState, (builder) => {
     builder
       .addCase(createPersonale.fulfilled, (state, action) => {
-        state.personaleList.push(action.payload);
+        state.personaleList.push({...action.payload, id: action.payload._id || ''});
       })
       .addCase(createPersonale.pending, (state) => {
         // state.saldiHomepage = initialState.saldiHomepage;
@@ -32,7 +32,10 @@ const initialState: PersonaleReducerType = {
         // state.saldiHomepage = initialState.saldiHomepage;
       })
       .addCase(getPersonale.fulfilled, (state, action) => {
-        state.personaleList = action.payload;
+        state.personaleList = action.payload.map((item) => ({
+          ...item,
+          id: item._id || '',
+        }));
       })
       .addCase(getPersonale.pending, (state) => {
         state.personaleList = initialState.personaleList;

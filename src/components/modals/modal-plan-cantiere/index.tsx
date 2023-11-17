@@ -5,154 +5,178 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Mezzo } from "../../../reducers/mezzi/types";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCirclePlus,
+  faMinus,
+  faRemove,
+} from "@fortawesome/free-solid-svg-icons";
 import { Persona } from "../../../reducers/personale/types";
 import { Cantiere } from "../../../reducers/cantieri/types";
-import {
-  CantieriPlan,
-  MezziPlan,
-  PersonalePlan,
-} from "../../../reducers/plan/types";
 import CardPlan from "../../cards/card-plan";
+import { MezziPlan, RDLPlan } from "../../../reducers/plan";
+import { v4 as uuidv4 } from "uuid";
+import usePlanHook from "../../../screens/Plan/usePlanHook";
+import { Mezzo } from "../../../reducers/mezzi";
 
 interface ModalRDLCantiereProps {
   onClose: () => void;
 }
 
 const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
-  //CANTIERI
-  const cantieri = useSelector((state: RootState) => state.cantieri.cantieriList);
+  const { mezzi, cantieri, personale, plan, createPlan, getPlan } = usePlanHook();
+
   const [cantieriFiltrati, setCantieriFiltrati] = useState<Cantiere[]>([]);
-  const [cantieriInPlan, setCantieriInPlan] = useState<CantieriPlan[]>([]);
-  const [planSelect, setPlanSelect] = useState<CantieriPlan | undefined>(
-    undefined
+  const [personalePresente, setPersonalePresente] = useState<Persona[]>([]);
+
+  const [rdlSelect, setRdlSelect] = useState<RDLPlan | undefined>(undefined);
+
+  const [rdlInPlan, setRdlInPlan] = useState<RDLPlan[]>(plan?.rdlList || []);
+  const [assenze, setAssenze] = useState<Persona[] | undefined>(
+    plan?.assenze || []
   );
+  const [dataPlan, setDataPlan] = useState(plan?.data || '');
 
   const updateCantieriFiltrati = () => {
-    const cantieriTmp = cantieri.filter(
+    const cantieriTmp = cantieri?.filter(
       (item1: Cantiere) =>
-        !cantieriInPlan.some(
-          (item2: CantieriPlan) => item2.cantiere._id === item1._id
-        )
+        !rdlInPlan.some((item2: RDLPlan) => item2.cantiere.id === item1.id)
     );
-    setCantieriFiltrati(cantieriTmp);
+    setCantieriFiltrati(cantieriTmp || []);
   };
 
   const addPlan = (item: Cantiere) => {
-    setCantieriInPlan([...cantieriInPlan, { cantiere: item }]);
+    setRdlInPlan([...rdlInPlan, { id: uuidv4(), cantiere: item }]);
   };
 
   const removePlan = (id: string) => {
-    const newArray = cantieriInPlan.filter(
-      (item: CantieriPlan) => item.cantiere.id !== id
-    );
-    setCantieriInPlan(newArray);
+    const newArray = rdlInPlan.filter((item: RDLPlan) => item.id !== id);
+    setRdlInPlan(newArray);
   };
 
   useEffect(() => {
+    setDataPlan(new Date().toISOString())
+  }, []);
+
+  useEffect(() => {
     updateCantieriFiltrati();
-  }, [cantieriInPlan]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rdlInPlan]);
+
+  useEffect(() => {
+    plan?.rdlList ? setRdlInPlan(plan?.rdlList) : setRdlInPlan([])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plan?.rdlList]);
+
+  useEffect(() => {
+    plan?.assenze ? setAssenze(plan?.assenze) : setAssenze([])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plan?.assenze]);
+
+  const updatePersonalePresente = () => {
+    const personaleTmp = personale?.filter(
+      (item1: Persona) =>
+        !assenze?.some((item2: Persona) => item2.id === item1.id)
+    );
+    setPersonalePresente(personaleTmp || []);
+  };
+
+  useEffect(() => {
+    updatePersonalePresente();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [assenze]);
 
   //MEZZI
-  const mezzi = useSelector((state: RootState) => state.mezzi.mezziList);
-
   const addMezzoInPlan = (item: MezziPlan) => {
-    const cantiereIndex = cantieriInPlan.findIndex(
-      (cantiere) => cantiere.cantiere._id === planSelect?.cantiere._id
-    );
-
-    if (cantiereIndex !== -1) {
-      const updatedCantieriInCantiere = [...cantieriInPlan];
-      updatedCantieriInCantiere[cantiereIndex].mezzi = [
-        ...(updatedCantieriInCantiere[cantiereIndex].mezzi || []),
+    const crdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === rdlSelect?.id);
+    if (crdlIndex !== -1) {
+      const updatedMezziInRdl = [...rdlInPlan];
+      updatedMezziInRdl[crdlIndex].mezzi = [
+        ...(updatedMezziInRdl[crdlIndex].mezzi || []),
         item,
       ];
-      setCantieriInPlan(updatedCantieriInCantiere);
+      setRdlInPlan(updatedMezziInRdl);
     }
   };
 
-  const removeMezzoInPlan = (idPlan: string, idMezzo: string) => {
-    const cantiereIndex = cantieriInPlan.findIndex(
-      (cantiere) => cantiere.cantiere.id === idPlan
-    );
-
-    if (cantiereIndex !== -1) {
-      const updatedCantieriInCantiere = [...cantieriInPlan];
-      const mezzoIndex = updatedCantieriInCantiere[
-        cantiereIndex
-      ]?.mezzi?.findIndex((mezzo) => mezzo.id === idMezzo);
-
+  const removeMezzoInPlan = (idRdl: string, idMezzo: string) => {
+    const crdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === idRdl);
+    if (crdlIndex !== -1) {
+      const updatedMezziInRdl = [...rdlInPlan];
+      const mezzoIndex = updatedMezziInRdl[crdlIndex]?.mezzi?.findIndex(
+        (mezzo) => mezzo.id === idMezzo
+      );
       if (mezzoIndex !== -1) {
-        updatedCantieriInCantiere[cantiereIndex].mezzi?.splice(
-          mezzoIndex || 0,
-          1
-        );
-        setCantieriInPlan(updatedCantieriInCantiere);
+        updatedMezziInRdl[crdlIndex].mezzi?.splice(mezzoIndex || 0, 1);
+        setRdlInPlan(updatedMezziInRdl);
       }
     }
   };
 
   //PERSONALE
-  const personale = useSelector(
-    (state: RootState) => state.personale.personaleList
-  );
-
-  const convertPersonaToPersonalePlan = (persona: Persona): PersonalePlan => {
-    // Esegui la conversione qui
-    const personalePlan: PersonalePlan = {
-      id: persona._id,
-      idPersonale: persona._id, // Supponiamo che ci sia una proprietà 'id' in 'Persona'
-      personale: `${persona.nome} ${persona.cognome}`, // Supponiamo che ci sia una proprietà 'nome' in 'Persona'
-      ore: 0, // Inserisci un valore predefinito per 'ore' o usa il valore corretto
-    };
-  
-    return personalePlan;
-  };
-
   const addPersonaInPlan = (item: Persona) => {
-    const cantiereIndex = cantieriInPlan.findIndex(
-      (cantiere) => cantiere.cantiere.id === planSelect?.cantiere.id
-    );
-
-    if (cantiereIndex !== -1) {
-      const updatedCantieriInCantiere = [...cantieriInPlan];
-      const personalePlan = convertPersonaToPersonalePlan(item);
-      updatedCantieriInCantiere[cantiereIndex].personale = [
-        ...(updatedCantieriInCantiere[cantiereIndex].personale || []),
-        personalePlan,
+    const rdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === rdlSelect?.id);
+    if (rdlIndex !== -1) {
+      const updatedPersonaInRdl = [...rdlInPlan];
+      updatedPersonaInRdl[rdlIndex].personale = [
+        ...(updatedPersonaInRdl[rdlIndex].personale || []),
+        { ...item, ore: 0 },
       ];
-      setCantieriInPlan(updatedCantieriInCantiere);
+      setRdlInPlan(updatedPersonaInRdl);
     }
   };
 
-  const removePersonaInPlan = (idPlan: string, idPersona: string) => {
-
-    const cantiereIndex = cantieriInPlan.findIndex(
-      (cantiere) => cantiere.cantiere.id === idPlan
-    );
-
-    if (cantiereIndex !== -1) {
-      const updatedCantieriInCantiere = [...cantieriInPlan];
-      const personaIndex = updatedCantieriInCantiere[
-        cantiereIndex
-      ]?.personale?.findIndex((persona) => persona.id === idPersona);
-      console.log('Plan', personaIndex);
-
+  const removePersonaInPlan = (idRdl: string, idPersona: string) => {
+    const rdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === idRdl);
+    if (rdlIndex !== -1) {
+      const updatedPersonaInRdl = [...rdlInPlan];
+      const personaIndex = updatedPersonaInRdl[rdlIndex]?.personale?.findIndex(
+        (persona) => persona.id === idPersona
+      );
       if (personaIndex !== -1) {
-        updatedCantieriInCantiere[cantiereIndex].personale?.splice(
-          personaIndex || 0,
-          1
-        );
-        setCantieriInPlan(updatedCantieriInCantiere);
+        updatedPersonaInRdl[rdlIndex].personale?.splice(personaIndex || 0, 1);
+        setRdlInPlan(updatedPersonaInRdl);
       }
     }
   };
 
-  const handleConfirm = () => {};
+  //ASSENZE
+  const removePersonaAssente = (idPersona: string) => {
+    setRdlInPlan((prevRdlInPlan) => {
+      return prevRdlInPlan.map((rdl) => {
+        const updatedRdl = { ...rdl }; // Clonare l'oggetto per evitare modifiche dirette
+
+        const personaIndex = updatedRdl?.personale?.findIndex(
+          (persona) => persona.id === idPersona
+        );
+
+        if (personaIndex !== -1) {
+          updatedRdl?.personale?.splice(personaIndex || 0, 1);
+        }
+
+        return updatedRdl;
+      });
+    });
+  };
+
+  const addPersonaInPlanAssenze = (personale: Persona) => {
+    setAssenze((prevAssenze) => [...(prevAssenze || []), personale]);
+    removePersonaAssente(personale.id);
+  };
+
+  const removePersonaInPlanAssenze = (idPersona: string) => {
+    setAssenze(assenze?.filter((item) => item.id !== idPersona));
+  };
+
+  const handleConfirm = () => {
+    createPlan({plan: {rdlList: rdlInPlan, assenze: assenze, data: dataPlan}})
+    onClose()
+  };
+
+  const getPlanFromData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDataPlan(e.target.value);
+    getPlan(e.target.value);
+  };
 
   return (
     <div className={`modal open`}>
@@ -163,8 +187,8 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
             <input
               type="date"
               className="cantiere-plan-modal-data"
-              // value={dataNascita}
-              // onChange={(e) => setDataNascita(e.target.value)}
+              value={dataPlan}
+              onChange={getPlanFromData}
             />
           </label>
         </div>
@@ -213,7 +237,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
                   <Typography>Personale</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  {personale.map((item: Persona, index) => (
+                  {personalePresente?.map((item: Persona, index) => (
                     <div className="personale-row">
                       <div
                         className={`personale-in-plan-row-text griglia-mansione${item.idMansione}`}
@@ -221,15 +245,36 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
                       >
                         {`${item.nome} ${item.cognome}`}
                       </div>
-                      {planSelect && (
+                      <div
+                        className="personale-in-plan-row-button"
+                        key={`in_plan${index}`}
+                      >
+                        <button
+                          className={`personale-plan-button`}
+                          onClick={() => addPersonaInPlanAssenze(item)}
+                        >
+                          <FontAwesomeIcon icon={faMinus} />
+                        </button>
+                      </div>
+                      {rdlSelect && (
                         <div
                           className="personale-in-plan-row-button"
                           key={`in_plan${index}`}
                         >
                           <button
-                            className={`personale-plan-button ${planSelect?.personale?.some((existingPersonale) => existingPersonale.id === item.id) ? 'disabled' : ''}`}
+                            className={`personale-plan-button ${
+                              rdlSelect?.personale?.some(
+                                (existingPersonale) =>
+                                  existingPersonale.id === item.id
+                              )
+                                ? "disabled"
+                                : ""
+                            }`}
                             onClick={() => addPersonaInPlan(item)}
-                            disabled={planSelect?.personale?.some((existingPersonale) => existingPersonale.id === item.id) }
+                            disabled={rdlSelect?.personale?.some(
+                              (existingPersonale) =>
+                                existingPersonale.id === item.id
+                            )}
                           >
                             <FontAwesomeIcon icon={faCirclePlus} />
                           </button>
@@ -248,7 +293,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
                   <Typography>Mezzi</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  {mezzi.map((item: Mezzo, index) => (
+                  {mezzi?.map((item: Mezzo, index) => (
                     <div className="personale-row">
                       <div
                         className={`personale-in-plan-row-text`}
@@ -256,15 +301,23 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
                       >
                         {`${item.nome} ${item.targa}`}
                       </div>
-                      {planSelect && (
+                      {rdlSelect && (
                         <div
                           className="personale-in-plan-row-button"
                           key={`in_plan${index}`}
                         >
                           <button
-                            className={`personale-plan-button ${planSelect?.mezzi?.some((existingMezzo) => existingMezzo.id === item.id) ? 'disabled' : ''}`}
+                            className={`personale-plan-button ${
+                              rdlSelect?.mezzi?.some(
+                                (existingMezzo) => existingMezzo.id === item.id
+                              )
+                                ? "disabled"
+                                : ""
+                            }`}
                             onClick={() => addMezzoInPlan(item as MezziPlan)}
-                            disabled={planSelect?.mezzi?.some((existingMezzo) => existingMezzo.id === item.id) }
+                            disabled={rdlSelect?.mezzi?.some(
+                              (existingMezzo) => existingMezzo.id === item.id
+                            )}
                           >
                             <FontAwesomeIcon icon={faCirclePlus} />
                           </button>
@@ -274,18 +327,51 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
                   ))}
                 </AccordionDetails>
               </Accordion>
+              <Accordion className="accordion">
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel2a-content"
+                  id="panel2a-header"
+                >
+                  <Typography>Assenze</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {assenze?.map((item: Persona, index) => (
+                    <div className="personale-row">
+                      <div
+                        className={`personale-in-plan-row-text griglia-mansione${item.idMansione}`}
+                        key={`personale${index}`}
+                      >
+                        {`${item.nome} ${item.cognome}`}
+                      </div>
+                      <div
+                        className="personale-in-plan-row-button"
+                        key={`in_plan${index}`}
+                      >
+                        <button
+                          className={`personale-plan-button`}
+                          onClick={() => removePersonaInPlanAssenze(item.id)}
+                        >
+                          <FontAwesomeIcon icon={faRemove} />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </AccordionDetails>
+              </Accordion>
             </div>
           </div>
+
           <div className="accordion-in-plan-grid2">
-            {cantieriInPlan?.map((item: CantieriPlan, index) => (
+            {rdlInPlan?.map((item: RDLPlan, index) => (
               <CardPlan
-                cantierePlan={item}
+                rdlPlan={item}
                 onDeletePlan={(id) => removePlan(id)}
                 onDeleteMezzo={(idPlan, idMezzo) =>
                   removeMezzoInPlan(idPlan, idMezzo)
                 }
-                onSelect={(item) => setPlanSelect(item)}
-                selected={planSelect?.cantiere?.id === item.cantiere.id}
+                onSelect={(item) => setRdlSelect(item)}
+                selected={rdlSelect?.cantiere?.id === item.cantiere.id}
                 onDeletePersonale={(idPlan, idPersona) =>
                   removePersonaInPlan(idPlan, idPersona)
                 }

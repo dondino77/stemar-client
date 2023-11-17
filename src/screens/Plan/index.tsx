@@ -1,21 +1,22 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import "./plan.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModalPlanCantiere from "../../components/modals/modal-plan-cantiere";
+import usePlanHook from "./usePlanHook";
+import { RDLPlan } from "../../reducers/plan";
+import CardCantiere from "../../components/cards/card-cantiere";
+import ModalRDLCantiere from "../../components/modals/modal-rdl-cantiere";
 
 interface PlanScreenProps {}
 
 const PlanScreen: React.FC<PlanScreenProps> = () => {
-  // const cantieri = useSelector((state: RootState) => state.cantieri.cantieri);
+  const { plan } = usePlanHook();
+
   const [isModalPlanOpen, setIsModalPlanOpen] = useState(false);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalRDLOpen, setIsModalRDLOpen] = useState(false);
+  const [itemSelected, setItemSelected] = useState<RDLPlan>();
 
-  // const [cantiereSelected, setCantiereSelected] = useState<
-  //   Cantiere | undefined
-  // >(undefined);
-
-  // const dispatch = useDispatch();
 
   const handleOpenModalPlan = () => {
     setIsModalPlanOpen(true);
@@ -25,54 +26,38 @@ const PlanScreen: React.FC<PlanScreenProps> = () => {
     setIsModalPlanOpen(false);
   };
 
-  const handleOpenModal = () => {
-    // setCantiereSelected(undefined);
-    // setIsModalOpen(true);
+  const handleOpenModalRDL = (item: RDLPlan) => {
+    setIsModalRDLOpen(true);
+    setItemSelected(item)
   };
 
-  // const handleCloseModal = () => {
-  //   setIsModalOpen(false);
-  // };
-
-  // const handleSalva = (cantiere: Cantiere) => {
-  //   dispatch(addCantiere(cantiere));
-  //   setIsModalOpen(false);
-  // };
-
-  // const handleDetail = (cantiere: Cantiere) => {
-  //   setCantiereSelected(cantiere);
-  //   setIsModalOpen(true);
-  // };
+  const handleCloseModalRDL = () => {
+    setIsModalRDLOpen(false);
+  };
 
   return (
     <div className="plan-container">
       <div className="toolbar-plan">
         <button className="button" onClick={handleOpenModalPlan}>
           <FontAwesomeIcon className="icon" icon={faPlus} />
-          Nuovo planning
+          Plan
         </button>
       </div>
 
       <div className={"plan-line"}></div>
 
-      {/* <div className="page">
-        {cantieri?.map((card: Cantiere, index) => (
+      <div className="page">
+        {plan?.rdlList?.map((card: RDLPlan, index) => (
           <CardCantiere
             key={index}
-            cantiere={card}
-            onDetail={handleDetail}
-            onRDL={handleOpenModalRDL}
+            rdl={card}
+            cantiere={card.cantiere}
+            onRDL={(card: RDLPlan) => handleOpenModalRDL(card)}
           />
         ))}
-      </div> */}
+      </div>
       {isModalPlanOpen && <ModalPlanCantiere onClose={handleCloseModalPlan} />}
-      {/* {isModalOpen && (
-        <ModalCantiere
-          onClose={handleCloseModal}
-          onSalva={handleSalva}
-          cantiere={cantiereSelected}
-        /> 
-      )}*/}
+      {isModalRDLOpen && <ModalRDLCantiere onClose={handleCloseModalRDL} rdlPlan={itemSelected} assenti={plan?.assenze} />}
     </div>
   );
 };

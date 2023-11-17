@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./modalCantiere.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
 import { Mezzo } from "../../../reducers/mezzi/types";
+import usePlanHook from "../../../screens/Plan/usePlanHook";
 
-interface MezziCantiereProps {}
+interface MezziCantiereProps {
+  mezziIn: Mezzo[]
+}
 
-const MezziCantiere: React.FC<MezziCantiereProps> = () => {
-  const mezzi = useSelector((state: RootState) => state.mezzi.mezziList);
+const MezziCantiere: React.FC<MezziCantiereProps> = ({mezziIn}) => {
+  const { mezzi } = usePlanHook();
   const [mezziFiltrati, setMezziFiltrati] = useState<Mezzo[]>([]);
   const [mezziInCantiere, setMezziInCantiere] = useState<Mezzo[]>([]);
 
@@ -21,13 +22,13 @@ const MezziCantiere: React.FC<MezziCantiereProps> = () => {
 
   const updateMezziFiltrati = () => {
     // Creare un nuovo array3 aggiornato
-    const mezziTmp = mezzi.filter(
+    const mezziTmp = mezzi?.filter(
       (item1: Mezzo) =>
         !mezziInCantiere.some((item2: Mezzo) => item2.id === item1.id)
     );
 
     // Aggiornare lo stato di array3 con il nuovo array
-    setMezziFiltrati(mezziTmp);
+    setMezziFiltrati(mezziTmp || []);
   };
 
   const addMezzoInCantiere = (item: Mezzo) => {
@@ -43,7 +44,12 @@ const MezziCantiere: React.FC<MezziCantiereProps> = () => {
 
   useEffect(() => {
     updateMezziFiltrati();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mezziInCantiere]);
+
+  useEffect(() => {
+    mezziIn && setMezziInCantiere(mezziIn);
+  }, [mezziIn]);
 
   //   const array3 = array1.filter(item1 => !array2.some(item2 => item2.id === item1.id));
 
@@ -90,7 +96,7 @@ const MezziCantiere: React.FC<MezziCantiereProps> = () => {
                 type="number"
                 step="1"
                 // value={costoKm}
-                // onChange={(e) => setCostoKm(parseFloat(e.target.value))}
+                onChange={(e) => handleSelectChange(item.id, e.target.value)}
               />
             </div>
 
