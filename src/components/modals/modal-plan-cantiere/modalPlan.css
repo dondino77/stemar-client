@@ -14,15 +14,15 @@
     z-index: 2;
   }
   
-  .modal-content {
+  .modal-content-plan {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     opacity: 0;
     transform: translateY(-20px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-    height: 90%;
-    width: 90%;
+    height: 93%;
+    width: 95%;
   }
   
   .modal.open {
@@ -31,7 +31,7 @@
     transition-delay: 3s;
   }
   
-  .modal.open .modal-content {
+  .modal.open .modal-content-plan {
     opacity: 1;
     transform: translateY(0);
   }

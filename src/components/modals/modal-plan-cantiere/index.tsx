@@ -24,7 +24,8 @@ interface ModalRDLCantiereProps {
 }
 
 const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
-  const { mezzi, cantieri, personale, plan, createPlan, getPlan } = usePlanHook();
+  const { mezzi, cantieri, personale, plan, createPlan, getPlan } =
+    usePlanHook();
 
   const [cantieriFiltrati, setCantieriFiltrati] = useState<Cantiere[]>([]);
   const [personalePresente, setPersonalePresente] = useState<Persona[]>([]);
@@ -35,7 +36,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   const [assenze, setAssenze] = useState<Persona[] | undefined>(
     plan?.assenze || []
   );
-  const [dataPlan, setDataPlan] = useState(plan?.data || '');
+  const [dataPlan, setDataPlan] = useState(plan?.data || "");
 
   const updateCantieriFiltrati = () => {
     const cantieriTmp = cantieri?.filter(
@@ -55,7 +56,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   };
 
   useEffect(() => {
-    setDataPlan(new Date().toISOString())
+    setDataPlan(new Date().toISOString());
   }, []);
 
   useEffect(() => {
@@ -64,12 +65,12 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   }, [rdlInPlan]);
 
   useEffect(() => {
-    plan?.rdlList ? setRdlInPlan(plan?.rdlList) : setRdlInPlan([])
+    plan?.rdlList ? setRdlInPlan(plan?.rdlList) : setRdlInPlan([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plan?.rdlList]);
 
   useEffect(() => {
-    plan?.assenze ? setAssenze(plan?.assenze) : setAssenze([])
+    plan?.assenze ? setAssenze(plan?.assenze) : setAssenze([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plan?.assenze]);
 
@@ -100,11 +101,12 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   };
 
   const removeMezzoInPlan = (idRdl: string, idMezzo: string) => {
+    
     const crdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === idRdl);
     if (crdlIndex !== -1) {
-      const updatedMezziInRdl = [...rdlInPlan];
+      const updatedMezziInRdl = JSON.parse(JSON.stringify(rdlInPlan));
       const mezzoIndex = updatedMezziInRdl[crdlIndex]?.mezzi?.findIndex(
-        (mezzo) => mezzo.id === idMezzo
+        (mezzo: Mezzo) => mezzo.id === idMezzo
       );
       if (mezzoIndex !== -1) {
         updatedMezziInRdl[crdlIndex].mezzi?.splice(mezzoIndex || 0, 1);
@@ -129,9 +131,9 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   const removePersonaInPlan = (idRdl: string, idPersona: string) => {
     const rdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === idRdl);
     if (rdlIndex !== -1) {
-      const updatedPersonaInRdl = [...rdlInPlan];
+      const updatedPersonaInRdl = JSON.parse(JSON.stringify(rdlInPlan));
       const personaIndex = updatedPersonaInRdl[rdlIndex]?.personale?.findIndex(
-        (persona) => persona.id === idPersona
+        (persona: Persona) => persona.id === idPersona
       );
       if (personaIndex !== -1) {
         updatedPersonaInRdl[rdlIndex].personale?.splice(personaIndex || 0, 1);
@@ -169,8 +171,10 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   };
 
   const handleConfirm = () => {
-    createPlan({plan: {rdlList: rdlInPlan, assenze: assenze, data: dataPlan}})
-    onClose()
+    createPlan({
+      plan: { rdlList: rdlInPlan, assenze: assenze, data: dataPlan },
+    });
+    onClose();
   };
 
   const getPlanFromData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -180,7 +184,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
 
   return (
     <div className={`modal open`}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-content-plan" onClick={(e) => e.stopPropagation()}>
         <div className="cantiere-plan-modal-group-data">
           <label>
             Data
