@@ -1,15 +1,20 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { PlanReducerType, PlanState, RDLPlan } from "./types";
+import { PlanState, PlanType, RDLPlan } from "./types";
 
 const planState = (state: PlanState) => state;
 
 export const rdlList = createSelector(
   planState,
-  (state): RDLPlan[] | undefined => state.plan.rdlList
+  (state): RDLPlan[] | undefined => state.plan.planner.rdlList
 );
 
 export const plan = createSelector(
   planState,
-  (state): PlanReducerType | undefined => state.plan
+  (state): PlanType | undefined => state.plan.planner
+);
+
+export const form = createSelector(
+  planState,
+  (state): PlanType | undefined => state.plan.form
 );
 

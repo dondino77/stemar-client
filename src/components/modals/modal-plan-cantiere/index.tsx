@@ -24,7 +24,7 @@ interface ModalRDLCantiereProps {
 }
 
 const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
-  const { mezzi, cantieri, personale, plan, createPlan, getPlan } =
+  const { mezzi, cantieri, personale, form, savePlan, getFormPlan } =
     usePlanHook();
 
   const [cantieriFiltrati, setCantieriFiltrati] = useState<Cantiere[]>([]);
@@ -32,11 +32,11 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
 
   const [rdlSelect, setRdlSelect] = useState<RDLPlan | undefined>(undefined);
 
-  const [rdlInPlan, setRdlInPlan] = useState<RDLPlan[]>(plan?.rdlList || []);
+  const [rdlInPlan, setRdlInPlan] = useState<RDLPlan[]>(form?.rdlList || []);
   const [assenze, setAssenze] = useState<Persona[] | undefined>(
-    plan?.assenze || []
+    form?.assenze || []
   );
-  const [dataPlan, setDataPlan] = useState(plan?.data || "");
+  const [dataPlan, setDataPlan] = useState(form?.data || "");
 
   const updateCantieriFiltrati = () => {
     const cantieriTmp = cantieri?.filter(
@@ -53,10 +53,11 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   const removePlan = (id: string) => {
     const newArray = rdlInPlan.filter((item: RDLPlan) => item.id !== id);
     setRdlInPlan(newArray);
+    setRdlSelect(undefined);
   };
 
   useEffect(() => {
-    setDataPlan(new Date().toISOString());
+    // setDataPlan(new Date().toISOString());
   }, []);
 
   useEffect(() => {
@@ -65,14 +66,14 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   }, [rdlInPlan]);
 
   useEffect(() => {
-    plan?.rdlList ? setRdlInPlan(plan?.rdlList) : setRdlInPlan([]);
+    form?.rdlList ? setRdlInPlan(form?.rdlList) : setRdlInPlan([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [plan?.rdlList]);
+  }, [form?.rdlList]);
 
   useEffect(() => {
-    plan?.assenze ? setAssenze(plan?.assenze) : setAssenze([]);
+    form?.assenze ? setAssenze(form?.assenze) : setAssenze([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [plan?.assenze]);
+  }, [form?.assenze]);
 
   const updatePersonalePresente = () => {
     const personaleTmp = personale?.filter(
@@ -89,28 +90,29 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
 
   //MEZZI
   const addMezzoInPlan = (item: MezziPlan) => {
-    const crdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === rdlSelect?.id);
-    if (crdlIndex !== -1) {
-      const updatedMezziInRdl = [...rdlInPlan];
-      updatedMezziInRdl[crdlIndex].mezzi = [
-        ...(updatedMezziInRdl[crdlIndex].mezzi || []),
-        item,
+    const rdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === rdlSelect?.id);
+    if (rdlIndex !== -1) {
+      const updatedMezziInRdl = JSON.parse(JSON.stringify(rdlInPlan));
+      updatedMezziInRdl[rdlIndex].mezzi = [
+        ...(updatedMezziInRdl[rdlIndex].mezzi || []),
+        { ...item, ore: 8 },
       ];
       setRdlInPlan(updatedMezziInRdl);
+      setRdlSelect(updatedMezziInRdl[rdlIndex]);
     }
   };
 
   const removeMezzoInPlan = (idRdl: string, idMezzo: string) => {
-    
-    const crdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === idRdl);
-    if (crdlIndex !== -1) {
+    const rdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === idRdl);
+    if (rdlIndex !== -1) {
       const updatedMezziInRdl = JSON.parse(JSON.stringify(rdlInPlan));
-      const mezzoIndex = updatedMezziInRdl[crdlIndex]?.mezzi?.findIndex(
+      const mezzoIndex = updatedMezziInRdl[rdlIndex]?.mezzi?.findIndex(
         (mezzo: Mezzo) => mezzo.id === idMezzo
       );
       if (mezzoIndex !== -1) {
-        updatedMezziInRdl[crdlIndex].mezzi?.splice(mezzoIndex || 0, 1);
+        updatedMezziInRdl[rdlIndex].mezzi?.splice(mezzoIndex || 0, 1);
         setRdlInPlan(updatedMezziInRdl);
+        setRdlSelect(updatedMezziInRdl[rdlIndex]);
       }
     }
   };
@@ -119,12 +121,13 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   const addPersonaInPlan = (item: Persona) => {
     const rdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === rdlSelect?.id);
     if (rdlIndex !== -1) {
-      const updatedPersonaInRdl = [...rdlInPlan];
+      const updatedPersonaInRdl = JSON.parse(JSON.stringify(rdlInPlan));
       updatedPersonaInRdl[rdlIndex].personale = [
         ...(updatedPersonaInRdl[rdlIndex].personale || []),
-        { ...item, ore: 0 },
+        { ...item, ore: 8 },
       ];
       setRdlInPlan(updatedPersonaInRdl);
+      setRdlSelect(updatedPersonaInRdl[rdlIndex]);
     }
   };
 
@@ -138,6 +141,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
       if (personaIndex !== -1) {
         updatedPersonaInRdl[rdlIndex].personale?.splice(personaIndex || 0, 1);
         setRdlInPlan(updatedPersonaInRdl);
+        setRdlSelect(updatedPersonaInRdl[rdlIndex]);
       }
     }
   };
@@ -146,10 +150,10 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   const removePersonaAssente = (idPersona: string) => {
     setRdlInPlan((prevRdlInPlan) => {
       return prevRdlInPlan.map((rdl) => {
-        const updatedRdl = { ...rdl }; // Clonare l'oggetto per evitare modifiche dirette
+        const updatedRdl = JSON.parse(JSON.stringify(rdl));
 
         const personaIndex = updatedRdl?.personale?.findIndex(
-          (persona) => persona.id === idPersona
+          (persona: { id: string; }) => persona.id === idPersona
         );
 
         if (personaIndex !== -1) {
@@ -171,15 +175,17 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   };
 
   const handleConfirm = () => {
-    createPlan({
-      plan: { rdlList: rdlInPlan, assenze: assenze, data: dataPlan },
+    savePlan({
+      rdlList: rdlInPlan,
+      assenze: assenze,
+      data: dataPlan,
     });
     onClose();
   };
 
   const getPlanFromData = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDataPlan(e.target.value);
-    getPlan(e.target.value);
+    getFormPlan(e.target.value);
   };
 
   return (
@@ -263,7 +269,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
                       {rdlSelect && (
                         <div
                           className="personale-in-plan-row-button"
-                          key={`in_plan${index}`}
+                          key={`out_plan_personale${index}`}
                         >
                           <button
                             className={`personale-plan-button ${
@@ -308,7 +314,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
                       {rdlSelect && (
                         <div
                           className="personale-in-plan-row-button"
-                          key={`in_plan${index}`}
+                          key={`out_plan_mezzi${index}`}
                         >
                           <button
                             className={`personale-plan-button ${
@@ -350,7 +356,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
                       </div>
                       <div
                         className="personale-in-plan-row-button"
-                        key={`in_plan${index}`}
+                        key={`out_plan_assenze${index}`}
                       >
                         <button
                           className={`personale-plan-button`}
@@ -369,12 +375,15 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
           <div className="accordion-in-plan-grid2">
             {rdlInPlan?.map((item: RDLPlan, index) => (
               <CardPlan
+                key={index}
                 rdlPlan={item}
                 onDeletePlan={(id) => removePlan(id)}
                 onDeleteMezzo={(idPlan, idMezzo) =>
                   removeMezzoInPlan(idPlan, idMezzo)
                 }
-                onSelect={(item) => setRdlSelect(item)}
+                onSelect={(item) => {
+                  setRdlSelect(item);
+                }}
                 selected={rdlSelect?.cantiere?.id === item.cantiere.id}
                 onDeletePersonale={(idPlan, idPersona) =>
                   removePersonaInPlan(idPlan, idPersona)

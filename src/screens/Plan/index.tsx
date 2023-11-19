@@ -11,7 +11,7 @@ import ModalRDLCantiere from "../../components/modals/modal-rdl-cantiere";
 interface PlanScreenProps {}
 
 const PlanScreen: React.FC<PlanScreenProps> = () => {
-  const { plan, getPlan } = usePlanHook();
+  const { plan, getPlan, resetForm, updateRdlList } = usePlanHook();
 
   const [isModalPlanOpen, setIsModalPlanOpen] = useState(false);
   const [isModalRDLOpen, setIsModalRDLOpen] = useState(false);
@@ -20,6 +20,7 @@ const PlanScreen: React.FC<PlanScreenProps> = () => {
 
 
   const handleOpenModalPlan = () => {
+    resetForm();
     setIsModalPlanOpen(true);
   };
 
@@ -33,6 +34,11 @@ const PlanScreen: React.FC<PlanScreenProps> = () => {
   };
 
   const handleCloseModalRDL = () => {
+    setIsModalRDLOpen(false);
+  };
+
+  const handleConfirmModalRDL = (personale: any, mezzi: any) => {
+    itemSelected && updateRdlList({...itemSelected, personale, mezzi});
     setIsModalRDLOpen(false);
   };
 
@@ -52,6 +58,7 @@ const PlanScreen: React.FC<PlanScreenProps> = () => {
   useEffect(() => {
     setToday(getToday());
     getPlan(getToday());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); 
 
   return (
@@ -93,6 +100,7 @@ const PlanScreen: React.FC<PlanScreenProps> = () => {
           onClose={handleCloseModalRDL}
           rdlPlan={itemSelected}
           assenti={plan?.assenze}
+          onConfirm={handleConfirmModalRDL}
         />
       )}
     </div>

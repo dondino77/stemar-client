@@ -140,6 +140,7 @@
 .personale-row {
   display: flex;
   padding: 10px;
+  z-index: 1;
 }
 
 select {

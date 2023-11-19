@@ -1,12 +1,12 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { PlanReducerType, PlanState, ThunkApiConfig } from "./types";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { PlanType, RDLPlan, ThunkApiConfig } from "./types";
 import { callApi } from "../api";
 
-export const createPlan = createAsyncThunk<PlanReducerType, PlanState, ThunkApiConfig>(
-  "plan/createPlan",
+export const savePlan = createAsyncThunk<PlanType, PlanType, ThunkApiConfig>(
+  "plan/savePlan",
   async (plan, { rejectWithValue, getState }) => {
     try {
-      const result = await callApi("POST", "/createPlan", plan);
+      const result = await callApi("POST", "/savePlan", plan);
 
       return result.response;
     } catch (error) {
@@ -15,7 +15,7 @@ export const createPlan = createAsyncThunk<PlanReducerType, PlanState, ThunkApiC
   }
 );
 
-export const getPlan = createAsyncThunk<PlanReducerType[], string, ThunkApiConfig>(
+export const getPlan = createAsyncThunk<PlanType[], string, ThunkApiConfig>(
   "plan/getPlan",
   async (data, { rejectWithValue, getState }) => {
     try {
@@ -28,7 +28,7 @@ export const getPlan = createAsyncThunk<PlanReducerType[], string, ThunkApiConfi
   }
 );
 
-export const getFormsPlan = createAsyncThunk<PlanReducerType[], string, ThunkApiConfig>(
+export const getFormPlan = createAsyncThunk<PlanType[], string, ThunkApiConfig>(
   "plan/getFormsPlan",
   async (data, { rejectWithValue, getState }) => {
     try {
@@ -41,15 +41,19 @@ export const getFormsPlan = createAsyncThunk<PlanReducerType[], string, ThunkApi
   }
 );
 
-// export const updatePersonale = createAsyncThunk<Persona, Persona, ThunkApiConfig>(
-//     "personale/updatePersonale",
-//     async (form, { rejectWithValue, getState }) => {
-//       try {
-//         const result = await callApi("PUT", `/updatePersonale/${form.id}`, form);
+export const updateRdlList = createAsyncThunk<RDLPlan, RDLPlan, ThunkApiConfig>(
+    "plan/updateRdl",
+    async (form, { rejectWithValue, getState }) => {
+      try {
+        const result = await callApi("PUT", `/updateRdlList/${form.id}`, form);
 
-//         return result.response;
-//       } catch (error) {
-//         return rejectWithValue(error);
-//       }
-//     }
-//   );
+        return result.response;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    }
+  );
+
+export const resetForm = createAction<void, 'plan/resetForm'>(
+  'plan/resetForm',
+);

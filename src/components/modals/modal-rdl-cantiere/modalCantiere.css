@@ -123,6 +123,17 @@
   /* margin-bottom: 1.5px; */
 }
 
+.personale-in-cantiere-rdl-row-sel {
+  /* margin-bottom: 5px; */
+  height: 30px;
+  width: 50px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  /* margin-bottom: 1.5px; */
+}
+
 select {
   width: 100%;
   padding: 5px;

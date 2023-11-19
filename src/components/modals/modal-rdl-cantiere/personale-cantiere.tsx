@@ -5,18 +5,25 @@ import { faUserPlus, faUserMinus } from "@fortawesome/free-solid-svg-icons";
 import { Persona } from "../../../reducers/personale/types";
 
 interface PersonaleCantiereProps {
-  personaleIn: Persona[]
-  personale: Persona[]
+  personaleIn: Persona[];
+  personale: Persona[];
+  personaleInCantiere: any;
+  setPersonaleInCantiere: (personale: any) => void;
 }
 
-const PersonaleCantiere: React.FC<PersonaleCantiereProps> = ({personaleIn, personale}) => {
+const PersonaleCantiere: React.FC<PersonaleCantiereProps> = ({
+  personaleIn,
+  personale,
+  personaleInCantiere,
+  setPersonaleInCantiere
+}) => {
   const [personaleFiltrato, setPersonaleFiltrato] = useState<Persona[]>([]);
-  const [personaleInCantiere, setPersonaleInCantiere] = useState<Persona[]>([]);
 
   const handleSelectChange = (id: any, value: any) => {
-    // setData((prevData) =>
-    //   prevData.map((item) => (item.id === id ? { ...item, value } : item))
-    // );
+    const index = personaleInCantiere?.findIndex((item1: Persona) => item1.id === id);
+    const upd = JSON.parse(JSON.stringify(personaleInCantiere));
+    upd[index].ore = value;
+    setPersonaleInCantiere(upd);
   };
 
   const updatePersonaleFiltrato = () => {
@@ -36,18 +43,17 @@ const PersonaleCantiere: React.FC<PersonaleCantiereProps> = ({personaleIn, perso
     const newArray = personaleInCantiere.filter(
       (item: Persona) => item.id !== id
     );
-    console.log("newArray", newArray);
-
     setPersonaleInCantiere(newArray);
   };
 
   useEffect(() => {
     updatePersonaleFiltrato();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personaleInCantiere]);
 
   useEffect(() => {
     personaleIn && setPersonaleInCantiere(personaleIn);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personaleIn]);
 
   return (
@@ -77,7 +83,7 @@ const PersonaleCantiere: React.FC<PersonaleCantiereProps> = ({personaleIn, perso
       </div>
 
       <div className="personale-in-cantiere-grid2">
-        {personaleInCantiere.map((item: Persona, index) => (
+        {personaleInCantiere.map((item: any, index: any) => (
           <>
             <div
               className={`personale-in-cantiere-row griglia-mansione${item.idMansione}`}
@@ -86,11 +92,11 @@ const PersonaleCantiere: React.FC<PersonaleCantiereProps> = ({personaleIn, perso
               {`${item.cognome} ${item.nome}`}
             </div>
             <div
-              className="personale-in-cantiere-row"
+              className="personale-in-cantiere-rdl-row-sel"
               key={`in_cantiere${index}`}
             >
               <select
-                // value={item.value}
+                value={item.ore}
                 onChange={(e) => handleSelectChange(item.id, e.target.value)}
               >
                 {Array.from({ length: 17 }, (_, i) => (

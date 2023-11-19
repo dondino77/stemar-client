@@ -22,7 +22,6 @@ const CardPlan: React.FC<CardPlanProps> = ({
   onSelect,
   selected,
 }) => {
-
   const actionDeletePlan = () => {
     onSelect(selected ? undefined : rdlPlan);
     onDeletePlan(rdlPlan.id);
@@ -51,13 +50,14 @@ const CardPlan: React.FC<CardPlanProps> = ({
             </div>
             <div
               className="personale-in-plan-row-button"
-              key={`in_plan${index}`}
+              key={`in_plan_personale${index}`}
             >
               <button
                 className="personale-plan-button"
-                onClick={() =>
-                  onDeletePersonale(rdlPlan.id, item.id)
-                }
+                onClick={(e) => {
+                  e.stopPropagation(); // Impedisce la propagazione dell'evento
+                  onDeletePersonale(rdlPlan.id, item.id);
+                }}
               >
                 <FontAwesomeIcon icon={faRemove} />
               </button>
@@ -68,20 +68,17 @@ const CardPlan: React.FC<CardPlanProps> = ({
         {(rdlPlan?.mezzi?.length || 0) > 0 && <h4>Mezzi</h4>}
 
         {rdlPlan.mezzi?.map((item: Mezzo, index) => (
-          <div className="personale-row">
-            <div
-              className={`personale-in-plan-row-text`}
-              key={`personale${index}`}
-            >
+          <div className="personale-row" key={`personale${index}`}>
+            <div className={`personale-in-plan-row-text`}>
               {`${item.nome} ${item.targa}`}
             </div>
-            <div
-              className="personale-in-plan-row-button"
-              key={`in_plan${index}`}
-            >
+            <div className="personale-in-plan-row-button">
               <button
                 className="personale-plan-button"
-                onClick={() => onDeleteMezzo(rdlPlan.id, item.id)}
+                onClick={(e) => {
+                  e.stopPropagation(); // Impedisce la propagazione dell'evento
+                  onDeleteMezzo(rdlPlan.id, item.id);
+                }}
               >
                 <FontAwesomeIcon icon={faRemove} />
               </button>

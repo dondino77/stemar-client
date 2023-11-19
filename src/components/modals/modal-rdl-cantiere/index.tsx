@@ -33,15 +33,19 @@ interface ModalRDLCantiereProps {
   onClose: () => void;
   rdlPlan: RDLPlan | undefined;
   assenti: Persona[] | undefined;
+  onConfirm: (personale: any, mezzi: any) => void;
 }
 
 const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
   onClose,
   rdlPlan,
   assenti,
+  onConfirm
 }) => {
   const [activeTab, setActiveTab] = useState("Personale");
   const { personale } = usePlanHook();
+  const [mezziInCantiere, setMezziInCantiere] = useState<any[]>([]);
+  const [personaleInCantiere, setPersonaleInCantiere] = useState<any>([]);
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
@@ -51,22 +55,13 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
     !assenti?.some((item2: Persona) => item2.id === item1.id)
   );
 
-  const handleConfirm = () => {};
+  const handleConfirm = () => {
+    onConfirm(personaleInCantiere, mezziInCantiere)
+  };
 
   return (
     <div className={`modal open`}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="cantiere-rdl-modal-group-data">
-          <label>
-            Data
-            <input
-              type="date"
-              className="cantiere-rdl-modal-data"
-              // value={dataNascita}
-              // onChange={(e) => setDataNascita(e.target.value)}
-            />
-          </label>
-        </div>
         <div className="tabs">
           <Tab label="Assenze" activeTab={activeTab} onClick={handleTabClick} />
           <Tab
@@ -98,12 +93,14 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
         <div className="tab-content">
           {activeTab === "Assenze" && <Assenti assenti={assenti || []} />}
           {activeTab === "Mezzi" && (
-            <MezziCantiere mezziIn={rdlPlan?.mezzi || []} />
+            <MezziCantiere mezziIn={rdlPlan?.mezzi || []} mezziInCantiere={mezziInCantiere} setMezziInCantiere={setMezziInCantiere} />
           )}
           {activeTab === "Personale" && (
             <PersonaleCantiere
               personale={personaleTmp || []}
               personaleIn={rdlPlan?.personale || []}
+              personaleInCantiere={personaleInCantiere}
+              setPersonaleInCantiere={setPersonaleInCantiere}
             />
           )}
           {activeTab === "materiali" && <Materiali />}

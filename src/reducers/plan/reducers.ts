@@ -1,18 +1,31 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { PlanReducerType } from "./types";
-import { createPlan, getFormsPlan, getPlan } from "./actions";
+import { savePlan, getFormPlan, getPlan, resetForm, updateRdlList } from "./actions";
 
-const initialState: PlanReducerType = {};
+const initialState: PlanReducerType = {
+  planner: {
+    id: "",
+    data: "",
+    rdlList: [],
+    assenze: [],
+  },
+  form: {
+    id: "",
+    data: "",
+    rdlList: [],
+    assenze: [],
+  },
+};
 
 export const planReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(createPlan.fulfilled, (state, action) => {
-      state.data = action.payload.data;
-      state.rdlList = action.payload.rdlList;
-      state.assenze = action.payload.assenze;
+    .addCase(savePlan.fulfilled, (state, action) => {
+      // state.fo.data = action.payload.data;
+      // state.planner.rdlList = action.payload.rdlList;
+      // state.planner.assenze = action.payload.assenze;
     })
-    .addCase(createPlan.pending, (state) => {
-      state = initialState;
+    .addCase(savePlan.pending, (state) => {
+      // state = initialState;
     })
     //   .addCase(updatePersonale.fulfilled, (state, action) => {
     //       state.personaleList = state.personaleList.map((persona) => (persona._id === action.payload._id ? action.payload : persona));
@@ -22,26 +35,28 @@ export const planReducer = createReducer(initialState, (builder) => {
     //   })
     .addCase(getPlan.fulfilled, (state, action) => {
       if (action.payload.length > 0) {
-        state.data = action.payload[0].data;
-        state.rdlList = action.payload[0].rdlList;
-        state.assenze = action.payload[0].assenze;
+        state.planner.data = action.payload[0].data;
+        state.planner.rdlList = action.payload[0].rdlList;
+        state.planner.assenze = action.payload[0].assenze;
       }
     })
     .addCase(getPlan.pending, (state) => {
-      state.data = initialState.data;
-      state.rdlList = initialState.rdlList;
-      state.assenze = initialState.assenze;
+      state.planner = initialState.planner;
     })
-    .addCase(getFormsPlan.fulfilled, (state, action) => {
+    .addCase(getFormPlan.fulfilled, (state, action) => {
       if (action.payload.length > 0) {
-        state.data = action.payload[0].data;
-        state.rdlList = action.payload[0].rdlList;
-        state.assenze = action.payload[0].assenze;
+        state.form.data = action.payload[0].data;
+        state.form.rdlList = action.payload[0].rdlList;
+        state.form.assenze = action.payload[0].assenze;
       }
     })
-    .addCase(getFormsPlan.pending, (state) => {
-      state.data = initialState.data;
-      state.rdlList = initialState.rdlList;
-      state.assenze = initialState.assenze;
+    .addCase(getFormPlan.pending, (state) => {
+      state.form = initialState.form;
+    })
+    .addCase(updateRdlList.fulfilled, (state, action) => {
+        state.planner = action.payload
+    })
+    .addCase(resetForm, (state) => {
+      state.form = initialState.form;
     });
 });
