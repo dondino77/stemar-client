@@ -21,9 +21,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    onLogin();
-    navigate("/home");
+    if (username === "admin" && password === "stemar2023") {
+      event.preventDefault();
+      onLogin();
+      navigate("/home");
+    }
   };
 
   return (

@@ -27,12 +27,6 @@ export const planReducer = createReducer(initialState, (builder) => {
     .addCase(savePlan.pending, (state) => {
       // state = initialState;
     })
-    //   .addCase(updatePersonale.fulfilled, (state, action) => {
-    //       state.personaleList = state.personaleList.map((persona) => (persona._id === action.payload._id ? action.payload : persona));
-    //   })
-    //   .addCase(updatePersonale.pending, (state) => {
-    //     // state.saldiHomepage = initialState.saldiHomepage;
-    //   })
     .addCase(getPlan.fulfilled, (state, action) => {
       if (action.payload.length > 0) {
         state.planner.data = action.payload[0].data;
