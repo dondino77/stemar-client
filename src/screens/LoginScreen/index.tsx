@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
+import logo from '../../assets/logo.png'; 
+
 
 interface LoginPageProps {
   onLogin: () => void;
@@ -32,7 +34,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     <div className="login-page">
       <div className="logo-container">
         <img
-          src="http://www.stemarcostruzioni.it/wp-content/uploads/2016/03/STEMAR_2021_logo_no-sito_2021_solo.png"
+          src={logo}
           alt="Logo azienda"
           className="logo"
         />
