@@ -5,6 +5,7 @@ import { mezziReducer } from './reducers/mezzi';
 import { personaleReducer } from './reducers/personale';
 import { cantieriReducer } from './reducers/cantieri';
 import { planReducer } from './reducers/plan';
+import { commonReducer } from './reducers/common';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     mezzi: mezziReducer,
     personale: personaleReducer,
     plan: planReducer,
+    common: commonReducer
   },
 });
 
