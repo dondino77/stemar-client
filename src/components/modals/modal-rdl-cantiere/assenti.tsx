@@ -1,5 +1,5 @@
 import React from "react";
-import "./modalCantiere.css";
+import "./modal-rdl-cantiere.css";
 import { Persona } from "../../../reducers/personale";
 
 interface AssentiProps {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./modal-personale.css";
+import "./modal-cantiere.css";
 import { Cantiere } from "../../../reducers/cantieri/types";
 
 interface ModalCantiereProps {
@@ -41,7 +41,7 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({
         <h2>Gestione Cantiere</h2>
         <div className="cantiere-form-field">
           <label>
-            Committente
+            Committente*
             <input
               type="text"
               value={committente}
@@ -52,7 +52,7 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({
 
         <div className="cantiere-form-field">
           <label>
-            Luogo
+            Luogo*
             <input
               type="text"
               value={luogo}
@@ -63,7 +63,7 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({
 
         <div className="cantiere-form-field">
           <label>
-            Oggetto lavori
+            Oggetto lavori*
             <input
               type="text"
               value={oggettoLavori}
@@ -111,7 +111,7 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({
           <button className="cantiere-btn-cancel" onClick={onClose}>
             Annulla
           </button>
-          <button className="cantiere-btn-confirm" onClick={handleConfirm}>
+          <button className="cantiere-btn-confirm" onClick={handleConfirm} disabled={committente === '' || luogo === '' || oggettoLavori ===''}>
             Conferma
           </button>
         </div>

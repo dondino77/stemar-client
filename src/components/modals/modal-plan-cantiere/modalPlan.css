@@ -91,6 +91,13 @@
   background-color: #0056b3;
 }
 
+.cantiere-plan-btn-confirm:disabled,
+.cantiere-plan-btn-cancel:disabled {
+  background-color: #ccc; /* Colore di sfondo per il pulsante disabilitato */
+  cursor: not-allowed; /* Cambia il cursore quando il pulsante è disabilitato */
+  color: #555; /* Colore del testo per il pulsante disabilitato */
+}
+
 .accordion-in-plan-grid1 {
   display: grid;
   flex: 1;

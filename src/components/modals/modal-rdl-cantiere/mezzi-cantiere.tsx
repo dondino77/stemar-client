@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./modalCantiere.css";
+import "./modal-rdl-cantiere.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { Mezzo } from "../../../reducers/mezzi/types";

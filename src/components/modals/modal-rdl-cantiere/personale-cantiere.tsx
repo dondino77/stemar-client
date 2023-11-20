@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./modalCantiere.css";
+import "./modal-rdl-cantiere.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus, faUserMinus } from "@fortawesome/free-solid-svg-icons";
 import { Persona } from "../../../reducers/personale/types";

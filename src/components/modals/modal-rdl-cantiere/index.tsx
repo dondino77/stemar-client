@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./modalCantiere.css";
+import "./modal-rdl-cantiere.css";
 import PersonaleCantiere from "./personale-cantiere";
 import MezziCantiere from "./mezzi-cantiere";
 import Assenti from "./assenti";

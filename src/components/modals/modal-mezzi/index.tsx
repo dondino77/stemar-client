@@ -39,7 +39,7 @@ const ModalMezzi: React.FC<ModalMezziProps> = ({ onClose, mezzo, onSalva }) => {
         <h2>Gestione Mezzi</h2>
         <div className="vehicle-form-field">
           <label>
-            Nome
+            Nome*
             <input
               type="text"
               value={nome}
@@ -49,7 +49,7 @@ const ModalMezzi: React.FC<ModalMezziProps> = ({ onClose, mezzo, onSalva }) => {
         </div>
         <div className="vehicle-form-field">
           <label>
-            Targa
+            Targa*
             <input
               type="text"
               value={targa}
@@ -89,7 +89,7 @@ const ModalMezzi: React.FC<ModalMezziProps> = ({ onClose, mezzo, onSalva }) => {
         </div>
         <div className="vehicle-form-field">
           <label>
-            Costo Orario
+            Costo Orario*
             <input
               type="number"
               step="0.01"
@@ -102,7 +102,7 @@ const ModalMezzi: React.FC<ModalMezziProps> = ({ onClose, mezzo, onSalva }) => {
           <button className="vehicle-btn-cancel" onClick={onClose}>
             Annulla
           </button>
-          <button className="vehicle-btn-confirm" onClick={handleConfirm}>
+          <button className="vehicle-btn-confirm" onClick={handleConfirm} disabled={nome === '' || targa === '' || costoOrario < 1}>
             Conferma
           </button>
         </div>

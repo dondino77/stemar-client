@@ -397,7 +397,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
           <button className="cantiere-plan-btn-cancel" onClick={onClose}>
             Annulla
           </button>
-          <button className="cantiere-plan-btn-confirm" onClick={handleConfirm}>
+          <button className="cantiere-plan-btn-confirm" onClick={handleConfirm} disabled={dataPlan === ''}>
             Conferma
           </button>
         </div>

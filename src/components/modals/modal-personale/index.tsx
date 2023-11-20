@@ -42,7 +42,7 @@ const ModalPersonale: React.FC<ModalPersonaleProps> = ({
         <h2>Gestione Personale</h2>
         <div className="personal-form-field">
           <label>
-            Nome
+            Nome*
             <input
               type="text"
               value={nome}
@@ -53,7 +53,7 @@ const ModalPersonale: React.FC<ModalPersonaleProps> = ({
 
         <div className="personal-form-field">
           <label>
-            Cognome
+            Cognome*
             <input
               type="text"
               value={cognome}
@@ -75,7 +75,7 @@ const ModalPersonale: React.FC<ModalPersonaleProps> = ({
         <div className="personal-form-field-group">
           <div className="personal-form-field">
             <label>
-              Coefficiente
+              Coefficiente*
               <input
                 type="number"
                 step="0.01"
@@ -123,7 +123,7 @@ const ModalPersonale: React.FC<ModalPersonaleProps> = ({
           <button className="personal-btn-cancel" onClick={onClose}>
             Annulla
           </button>
-          <button className="personal-btn-confirm" onClick={handleConfirm}>
+          <button className="personal-btn-confirm" onClick={handleConfirm} disabled={nome === '' || cognome === '' || coefficiente < 1}>
             Conferma
           </button>
         </div>
