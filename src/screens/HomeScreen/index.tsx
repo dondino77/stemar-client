@@ -8,20 +8,36 @@ import MezziScreen from "../MezziScreen";
 import PersonaleScreen from "../PersonaleScreen";
 import PlanScreen from "../Plan";
 import useHomeHook from "./useHookHome";
+import ClientiFornitoriScreen from "../ClientiFornitori";
 
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = () => {
   const dispatch = useDispatch();
 
-  const { getCantieri, getMezzi, getPersonale } = useHomeHook();
+  const { getCantieri, getMezzi, getPersonale, getClientiFornitori } =
+    useHomeHook();
 
   const [screenSelected, setScreenSelected] = useState<
-    "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare" | "plan"
+    | "cantieri"
+    | "mezzi"
+    | "personale"
+    | "amministrazione"
+    | "gare"
+    | "plan"
+    | "clientiFornitori"
   >("plan");
 
-
-  const handleSelectScreen = (txt: "cantieri" | "mezzi" | "personale" | "amministrazione" | "gare" | "plan") => {
+  const handleSelectScreen = (
+    txt:
+      | "cantieri"
+      | "mezzi"
+      | "personale"
+      | "amministrazione"
+      | "gare"
+      | "plan"
+      | "clientiFornitori"
+  ) => {
     setScreenSelected(txt);
   };
 
@@ -30,10 +46,11 @@ const Home: React.FC<HomeProps> = () => {
   };
 
   useEffect(() => {
+    getClientiFornitori();
     getPersonale();
     getCantieri();
     getMezzi();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -46,6 +63,7 @@ const Home: React.FC<HomeProps> = () => {
           {screenSelected === "cantieri" && <CantieriScreen />}
           {screenSelected === "mezzi" && <MezziScreen />}
           {screenSelected === "personale" && <PersonaleScreen />}
+          {screenSelected === "clientiFornitori" && <ClientiFornitoriScreen />}
         </div>
       </div>
     </div>

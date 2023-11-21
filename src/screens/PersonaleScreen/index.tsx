@@ -6,6 +6,7 @@ import ModalPersonale from "../../components/modals/modal-personale";
 import { Persona } from "../../reducers/personale/types";
 import CardPersonale from "../../components/cards/card-personale";
 import usePersonaleHook from "./useHookPersonale";
+import Button from "@mui/material/Button";
 
 interface PersonaleScreenProps {}
 
@@ -48,10 +49,10 @@ const PersonaleScreen: React.FC<PersonaleScreenProps> = () => {
   return (
     <div className="personale-container">
       <div className="toolbar-personale">
-        <button className="button" onClick={handleOpenModal}>
+        <Button className="button" onClick={handleOpenModal} variant="outlined">
           <FontAwesomeIcon className="icon" icon={faPlus} />
           Nuovo
-        </button>
+        </Button>
       </div>
 
       <div className={"personale-line"}></div>

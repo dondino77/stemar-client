@@ -36,34 +36,6 @@
     transform: translateY(0);
   }
 
-  .tab-content {
-    padding: 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    height: 520px;
-  }
-
-  .tabs {
-    display: flex;
-    align-items: center;
-    background-color: #f0f0f0;
-    padding: 10px;
-  }
-  
-  .tab {
-    cursor: pointer;
-    padding: 10px 20px;
-    background-color: #ccc;
-    border-radius: 5px;
-    color: #444;
-    margin-right: 10px;
-  }
-  
-  .tab.active {
-    background-color: #007bff;
-    color: #fff;
-  }
-
 .cantiere-plan-modal-bottom-bar {
   position: absolute;
   bottom: 0;

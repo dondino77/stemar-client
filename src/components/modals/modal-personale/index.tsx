@@ -1,6 +1,23 @@
 import React, { useState } from "react";
 import "./modal-personale.css";
 import { Persona } from "../../../reducers/personale/types";
+import Button from "@mui/material/Button";
+import {
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import itLocale from "date-fns/locale/it";
+import { format } from "date-fns";
+import { DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 interface ModalPersonaleProps {
   persona?: Persona;
@@ -25,7 +42,7 @@ const ModalPersonale: React.FC<ModalPersonaleProps> = ({
 
   const handleConfirm = () => {
     onSalva({
-      id: persona?._id || '',
+      id: persona?._id || "",
       nome,
       cognome,
       dataNascita,
@@ -39,93 +56,142 @@ const ModalPersonale: React.FC<ModalPersonaleProps> = ({
   return (
     <div className="personal-modal">
       <div className="personal-modal-content">
-        <h2>Gestione Personale</h2>
-        <div className="personal-form-field">
-          <label>
-            Nome*
-            <input
-              type="text"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-            />
-          </label>
-        </div>
-
-        <div className="personal-form-field">
-          <label>
-            Cognome*
-            <input
-              type="text"
-              value={cognome}
-              onChange={(e) => setCognome(e.target.value)}
-            />
-          </label>
-        </div>
-        <div className="personal-form-field">
-          <label>
-            Data di nascita
-            <input
-              type="date"
-              value={dataNascita ? new Date(dataNascita).toISOString().split('T')[0] : ''}
-              onChange={(e) => setDataNascita(e.target.value)}
-            />
-          </label>
-        </div>
-
-        <div className="personal-form-field-group">
-          <div className="personal-form-field">
-            <label>
-              Coefficiente*
-              <input
-                type="number"
-                step="0.01"
-                value={coefficiente}
-                onChange={(e) => setCoefficiente(parseFloat(e.target.value))}
+        <Typography variant="h4" gutterBottom>
+          Gestione Personale
+        </Typography>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <TextField
+            type="text"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            label={"Nome"}
+            required
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <TextField
+            type="text"
+            value={cognome}
+            onChange={(e) => setCognome(e.target.value)}
+            label={"Cognomeome"}
+            required
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <LocalizationProvider
+            adapterLocale={itLocale}
+            dateAdapter={AdapterDateFns}
+          >
+            <DemoContainer components={["DatePicker"]}>
+              <DatePicker
+                label="Data di nascita"
+                value={new Date(dataNascita || "")}
+                onChange={(newValue: any) =>
+                  setDataNascita(
+                    format(newValue, "yyyy-MM-dd", { locale: itLocale })
+                  )
+                }
               />
-            </label>
-          </div>
-          <div className="personal-form-field">
-            <label htmlFor="mansione">Mansione</label>
-            <select
-              id="mansione"
-              name="mansione"
-              value={mansione.value}
-              onChange={(e) =>
-                setMansione({
-                  id: e.target.selectedIndex,
-                  value: e.target.value,
-                })
-              }
+            </DemoContainer>
+          </LocalizationProvider>
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <TextField
+            type="number"
+            value={coefficiente}
+            onChange={(e) => setCoefficiente(parseFloat(e.target.value))}
+            label={"Coefficiente"}
+            inputProps={{
+              min: 0,
+              step: 1,
+              pattern: "[0-9]+([.][0-9]+)?",
+            }}
+            required
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <TextField
+            required
+            type="number"
+            value={coefficiente}
+            onChange={(e) => setCoefficiente(parseFloat(e.target.value))}
+            label={"Coefficiente"}
+            inputProps={{
+              min: 0,
+              step: 1,
+              pattern: "[0-9]+([.][0-9]+)?",
+            }}
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <InputLabel id="demo-simple-select-label">Mansione</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={JSON.stringify(mansione)}
+            label="Mansione"
+            onChange={(e) =>
+              setMansione({
+                id: JSON.parse(e.target.value).id,
+                value: JSON.parse(e.target.value).value,
+              })
+            }
+          >
+            <MenuItem
+              value={JSON.stringify({ id: 0, value: "Intonacatore/Pittore" })}
             >
-              <option value="Intonacatore/Pittore">Intonacatore/Pittore</option>
-              <option value="Piastrellista">Piastrellista</option>
-              <option value="Carpentiere/Muratore">Carpentiere/Muratore</option>
-              <option value="Idraulico">Idraulico</option>
-              <option value="Elettricista">Elettricista</option>
-              <option value="Autista/Escavatorista">
-                Autista/Escavatorista
-              </option>
-              <option value="Magazziniere">Magazziniere</option>
-            </select>
-          </div>
-          <div className="personal-form-field">
-            <label htmlFor="manovale">Manovale</label>
-            <input
-              type="checkbox"
-              id="manovale"
-              name="manovale"
+              Intonacatore/Pittore
+            </MenuItem>
+            <MenuItem value={JSON.stringify({ id: 1, value: "Piastrellista" })}>
+              Piastrellista
+            </MenuItem>
+            <MenuItem
+              value={JSON.stringify({ id: 2, value: "Carpentiere/Muratore" })}
+            >
+              Carpentiere/Muratore
+            </MenuItem>
+            <MenuItem value={JSON.stringify({ id: 3, value: "Idraulico" })}>
+              Idraulico
+            </MenuItem>
+            <MenuItem value={JSON.stringify({ id: 4, value: "Elettricista" })}>
+              Elettricista
+            </MenuItem>
+            <MenuItem
+              value={JSON.stringify({ id: 5, value: "Autista/Escavatorista" })}
+            >
+              Autista/Escavatorista
+            </MenuItem>
+            <MenuItem value={JSON.stringify({ id: 6, value: "Magazziniere" })}>
+              Magazziniere
+            </MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControlLabel
+          sx={{ m: 1 }}
+          label="Manovale"
+          control={
+            <Checkbox
               checked={manovale}
               onChange={(e) => setManovale(e.target.checked)}
             />
-          </div>
-        </div>
+          }
+        />
+
         <div className="personal-modal-bottom-bar">
-          <button className="personal-btn-cancel" onClick={onClose}>
+          <Button
+            onClick={onClose}
+            variant="outlined"
+          >
             Annulla
-          </button>
-          <button className="personal-btn-confirm" onClick={handleConfirm} disabled={nome === '' || cognome === '' || coefficiente < 1}>
+          </Button>
+          <Button
+            onClick={handleConfirm}
+            disabled={nome === "" || cognome === "" || coefficiente < 1}
+            variant="contained"
+          >
             Conferma
-          </button>
+          </Button>
         </div>
       </div>
     </div>

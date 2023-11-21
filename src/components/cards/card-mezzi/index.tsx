@@ -3,6 +3,7 @@ import "./card-mezzi.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { Mezzo } from "../../../reducers/mezzi/types";
+import Button from "@mui/material/Button";
 
 interface CardMezziProps {
   mezzo: Mezzo;
@@ -41,9 +42,9 @@ const CardMezzi: React.FC<CardMezziProps> = ({ mezzo, onDetail }) => {
       }`}</p>
       <div className="card-bottom-bar">
         <div className="left-buttons">
-          <button className="left-button" onClick={() => onDetail(mezzo)}>
+          <Button className="left-button" onClick={() => onDetail(mezzo)} variant="outlined">
             <FontAwesomeIcon icon={faEye} />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

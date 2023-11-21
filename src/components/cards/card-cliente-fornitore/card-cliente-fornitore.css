@@ -1,11 +1,11 @@
-.card_mezzo {
+.card_cliente_fornitore {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
   margin: 5px;
   cursor: pointer;
   width: 350px;
-  height: 280px;
+  height: 230px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: relative; /* Aggiungi questa riga per consentire il posizionamento relativo */
 }

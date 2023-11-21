@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModalCantiere from "../../components/modals/modal-cantiere";
 import useCantieriHook from "./useHookCantieri";
+import Button from "@mui/material/Button";
 
 interface CantieriScreenProps {}
 
@@ -45,10 +46,10 @@ const CantieriScreen: React.FC<CantieriScreenProps> = () => {
   return (
     <div className="cantieri-container">
       <div className="toolbar-cantieri">
-        <button className="button" onClick={handleOpenModal}>
+        <Button className="button" onClick={handleOpenModal} variant="outlined">
           <FontAwesomeIcon className="icon" icon={faPlus} />
           Nuovo cantiere
-        </button>
+        </Button>
       </div>
 
       <div className={"cantieri-line"}></div>

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "./modal-cantiere.css";
 import { Cantiere } from "../../../reducers/cantieri/types";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import Typography from "@mui/material/Typography";
 
 interface ModalCantiereProps {
   cantiere?: Cantiere;
@@ -24,96 +29,98 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({
 
   const handleConfirm = () => {
     onSalva({
-      id: cantiere?._id || '',
+      id: cantiere?._id || "",
       committente,
       luogo,
       oggettoLavori,
       impresa,
       preventivo,
       durataGG,
-      error: false
+      error: false,
     });
   };
 
   return (
     <div className="cantiere-modal">
       <div className="cantiere-modal-content">
-        <h2>Gestione Cantiere</h2>
-        <div className="cantiere-form-field">
-          <label>
-            Committente*
-            <input
-              type="text"
-              value={committente}
-              onChange={(e) => setCommittente(e.target.value)}
-            />
-          </label>
-        </div>
-
-        <div className="cantiere-form-field">
-          <label>
-            Luogo*
-            <input
-              type="text"
-              value={luogo}
-              onChange={(e) => setLuogo(e.target.value)}
-            />
-          </label>
-        </div>
-
-        <div className="cantiere-form-field">
-          <label>
-            Oggetto lavori*
-            <input
-              type="text"
-              value={oggettoLavori}
-              onChange={(e) => setOggettoLavori(e.target.value)}
-            />
-          </label>
-        </div>
-
-        <div className="cantiere-form-field">
-          <label>
-            Impresa
-            <input
-              type="text"
-              value={impresa}
-              onChange={(e) => setImpresa(e.target.value)}
-            />
-          </label>
-        </div>
-
-        <div className="cantiere-form-field-group">
-          <div className="cantiere-form-field">
-            <label>
-              Preventivo
-              <input
-                type="number"
-                step="0.01"
-                value={preventivo}
-                onChange={(e) => setPreventivo(parseFloat(e.target.value))}
-              />
-            </label>
-          </div>
-          <div className="cantiere-form-field">
-            <label>
-              Durata Giorni
-              <input
-                type="number"
-                step="1"
-                value={durataGG}
-                onChange={(e) => setDurataGG(parseFloat(e.target.value))}
-              />
-            </label>
-          </div>
-        </div>
+        <Typography variant="h4" gutterBottom>
+          Gestione Cantiere
+        </Typography>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <TextField
+            type="text"
+            value={committente}
+            onChange={(e) => setCommittente(e.target.value)}
+            label={'Committente'}
+            required
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <TextField
+            type="text"
+            value={luogo}
+            onChange={(e) => setLuogo(e.target.value)}
+            label={"Luogo"}
+            required
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <TextField
+            type="text"
+            value={oggettoLavori}
+            onChange={(e) => setOggettoLavori(e.target.value)}
+            label={"Oggetto lavori"}
+            required
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <TextField
+            type="text"
+            value={impresa}
+            onChange={(e) => setImpresa(e.target.value)}
+            label={"Impresa"}
+          />
+        </FormControl>
+        <Box sx={{ "& > :not(style)": { m: 1 }, display: "flex" }}>
+          <TextField
+            type="number"
+            value={preventivo}
+            onChange={(e) => setPreventivo(parseFloat(e.target.value))}
+            label={"Preventivo"}
+            inputProps={{
+              min: 0, 
+              step: 100,
+              pattern: '[0-9]+([.][0-9]+)?', 
+            }}
+          />
+          <TextField
+            type="number"
+            value={durataGG}
+            onChange={(e) => setDurataGG(parseFloat(e.target.value))}
+            label={"Durata GG"}
+            inputProps={{
+              min: 0,
+              step: 1, 
+              pattern: '[0-9]+([.][0-9]+)?', 
+            }}
+          />
+        </Box>
         <div className="cantiere-modal-bottom-bar">
-          <button className="cantiere-btn-cancel" onClick={onClose}>
+          <Button
+            onClick={onClose}
+            variant="outlined"
+          >
             Annulla
-          </button>
-          <button className="cantiere-btn-confirm" onClick={handleConfirm} disabled={committente === '' || luogo === '' || oggettoLavori ===''}>
+          </Button>
+          <Button
+            onClick={handleConfirm}
+            disabled={
+              committente === "" || luogo === "" || oggettoLavori === ""
+            }
+            variant="contained"
+          >
             Conferma
-          </button>
+          </Button>
         </div>
       </div>
     </div>

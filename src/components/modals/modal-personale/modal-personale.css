@@ -25,39 +25,6 @@
   width: 550px;
 }
 
-.personal-modal h2 {
-  margin-top: 0;
-}
-
-.personal-modal label {
-  display: block;
-  margin-bottom: 10px;
-}
-
-.personal-modal input{
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-top: 10px;
-}
-
-.personal-form-field {
-  margin-bottom: 15px;
-}
-
-.personal-form-field label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.personal-form-field input {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  height: 30px;
-}
 
 .personal-modal-bottom-bar {
   display: flex;
@@ -74,74 +41,5 @@
   color: #fff;
   cursor: pointer;
   height: 40px;
-}
-
-.personal-btn-confirm:hover,
-.personal-btn-cancel:hover {
-  background-color: #0056b3;
-}
-
-.personal-btn-confirm:disabled,
-.personal-btn-cancel:disabled {
-  background-color: #ccc; /* Colore di sfondo per il pulsante disabilitato */
-  cursor: not-allowed; /* Cambia il cursore quando il pulsante è disabilitato */
-  color: #555; /* Colore del testo per il pulsante disabilitato */
-}
-
-.personal-modal input[type="checkbox"] {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-top: 10px;
-  height: 30px;
-}
-
-.personal-modal input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  width: 16px;
-  height: 16px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  margin-right: 5px;
-  vertical-align: middle;
-  position: relative;
-  top: 10px;
-}
-
-.personal-modal input[type="checkbox"]:checked {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-.personal-modal select {
-  width: 250px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-top: 5px;
-  height: 40px;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-color: #fff;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M1.41,4.59L6,9.17l4.59-4.58L11,6l-6,6L1,6Z' fill='%23666666'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-}
-
-.personal-modal select::-ms-expand {
-  display: none;
-}
-
-.personal-modal select option {
-  background-color: #fff;
-}
-
-.personal-form-field-group {
-  display: flex;
-  gap: 30px;
 }
 

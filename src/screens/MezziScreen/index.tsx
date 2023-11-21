@@ -6,6 +6,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import CardMezzi from "../../components/cards/card-mezzi";
 import { Mezzo } from "../../reducers/mezzi/types";
 import useMezziHook from "./useHookMezzi";
+import Button from "@mui/material/Button";
 
 interface MezziScreenProps {}
 
@@ -48,10 +49,10 @@ const MezziScreen: React.FC<MezziScreenProps> = () => {
   return (
     <div className="mezzi-container">
       <div className="toolbar-mezzi">
-        <button className="button" onClick={handleOpenModal}>
+        <Button className="button" onClick={handleOpenModal} variant="outlined">
           <FontAwesomeIcon className="icon" icon={faPlus} />
           Nuovo mezzo
-        </button>
+        </Button>
       </div>
 
       <div className={"mezzi-line"}></div>

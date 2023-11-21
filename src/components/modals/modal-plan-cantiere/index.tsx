@@ -18,6 +18,7 @@ import { MezziPlan, RDLPlan } from "../../../reducers/plan";
 import { v4 as uuidv4 } from "uuid";
 import usePlanHook from "../../../screens/Plan/usePlanHook";
 import { Mezzo } from "../../../reducers/mezzi";
+import Button from "@mui/material/Button";
 
 interface ModalRDLCantiereProps {
   onClose: () => void;
@@ -153,7 +154,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
         const updatedRdl = JSON.parse(JSON.stringify(rdl));
 
         const personaIndex = updatedRdl?.personale?.findIndex(
-          (persona: { id: string; }) => persona.id === idPersona
+          (persona: { id: string }) => persona.id === idPersona
         );
 
         if (personaIndex !== -1) {
@@ -394,12 +395,21 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
         </div>
 
         <div className="cantiere-plan-modal-bottom-bar">
-          <button className="cantiere-plan-btn-cancel" onClick={onClose}>
+          <Button
+            className="cantiere-plan-btn-cancel"
+            variant="outlined"
+            onClick={onClose}
+          >
             Annulla
-          </button>
-          <button className="cantiere-plan-btn-confirm" onClick={handleConfirm} disabled={dataPlan === ''}>
+          </Button>
+          <Button
+            className="cantiere-plan-btn-confirm"
+            onClick={handleConfirm}
+            disabled={dataPlan === ""}
+            variant="contained"
+          >
             Conferma
-          </button>
+          </Button>
         </div>
       </div>
     </div>

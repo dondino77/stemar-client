@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Cantiere } from "../../../reducers/cantieri/types";
 import { RDLPlan } from "../../../reducers/plan";
+import Button from "@mui/material/Button";
 
 interface CardCantiereProps {
   rdl?: RDLPlan;
@@ -64,14 +65,14 @@ const CardCantiere: React.FC<CardCantiereProps> = ({
       <div className="card-bottom-bar">
         <div className="left-buttons">
           {onDetail && (
-            <button className="left-button" onClick={() => onDetail(cantiere)}>
+            <Button className="left-button" onClick={() => onDetail(cantiere)} variant="outlined">
               <FontAwesomeIcon icon={faEye} />
-            </button>
+            </Button>
           )}
           {onRDL && (
-            <button className="left-button" onClick={() => rdl && onRDL(rdl)}>
+            <Button className="left-button" onClick={() => rdl && onRDL(rdl)} variant="outlined">
               <FontAwesomeIcon icon={faCalendarDays} />
-            </button>
+            </Button>
           )}
         </div>
         {/* <div className="right-buttons">

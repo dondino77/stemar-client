@@ -6,6 +6,7 @@ import Assenti from "./assenti";
 import { RDLPlan } from "../../../reducers/plan";
 import { Persona } from "../../../reducers/personale";
 import usePlanHook from "../../../screens/Plan/usePlanHook";
+import Button from "@mui/material/Button";
 
 interface TabProps {
   label: string;
@@ -40,7 +41,7 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
   onClose,
   rdlPlan,
   assenti,
-  onConfirm
+  onConfirm,
 }) => {
   const [activeTab, setActiveTab] = useState("Personale");
   const { personale } = usePlanHook();
@@ -51,12 +52,13 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
     setActiveTab(tab);
   };
 
-  const personaleTmp = personale?.filter((item1: Persona) =>
-    !assenti?.some((item2: Persona) => item2.id === item1.id)
+  const personaleTmp = personale?.filter(
+    (item1: Persona) =>
+      !assenti?.some((item2: Persona) => item2.id === item1.id)
   );
 
   const handleConfirm = () => {
-    onConfirm(personaleInCantiere, mezziInCantiere)
+    onConfirm(personaleInCantiere, mezziInCantiere);
   };
 
   return (
@@ -89,29 +91,42 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
             onClick={handleTabClick}
           />
         </div>
-
-        <div className="tab-content">
-          {activeTab === "Assenze" && <Assenti assenti={assenti || []} />}
-          {activeTab === "Mezzi" && (
-            <MezziCantiere mezziIn={rdlPlan?.mezzi || []} mezziInCantiere={mezziInCantiere} setMezziInCantiere={setMezziInCantiere} />
-          )}
-          {activeTab === "Personale" && (
-            <PersonaleCantiere
-              personale={personaleTmp || []}
-              personaleIn={rdlPlan?.personale || []}
-              personaleInCantiere={personaleInCantiere}
-              setPersonaleInCantiere={setPersonaleInCantiere}
-            />
-          )}
-          {activeTab === "materiali" && <Materiali />}
-        </div>
-        <div className="cantiere-rdl-modal-bottom-bar">
-          <button className="cantiere-rdl-btn-cancel" onClick={onClose}>
-            Annulla
-          </button>
-          <button className="cantiere-rdl-btn-confirm" onClick={handleConfirm}>
-            Conferma
-          </button>
+        <div className="content-rdl">
+          <div className="tab-content-rdl">
+            {activeTab === "Assenze" && <Assenti assenti={assenti || []} />}
+            {activeTab === "Mezzi" && (
+              <MezziCantiere
+                mezziIn={rdlPlan?.mezzi || []}
+                mezziInCantiere={mezziInCantiere}
+                setMezziInCantiere={setMezziInCantiere}
+              />
+            )}
+            {activeTab === "Personale" && (
+              <PersonaleCantiere
+                personale={personaleTmp || []}
+                personaleIn={rdlPlan?.personale || []}
+                personaleInCantiere={personaleInCantiere}
+                setPersonaleInCantiere={setPersonaleInCantiere}
+              />
+            )}
+            {activeTab === "materiali" && <Materiali />}
+          </div>
+          <div className="cantiere-rdl-modal-bottom-bar">
+            <Button
+              className="cantiere-rdl-btn-cancel"
+              variant="outlined"
+              onClick={onClose}
+            >
+              Annulla
+            </Button>
+            <Button
+              className="cantiere-rdl-btn-confirm"
+              onClick={handleConfirm}
+              variant="contained"
+            >
+              Conferma
+            </Button>
+          </div>
         </div>
       </div>
     </div>

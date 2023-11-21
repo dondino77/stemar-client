@@ -7,6 +7,7 @@ import usePlanHook from "./usePlanHook";
 import { RDLPlan } from "../../reducers/plan";
 import CardCantiere from "../../components/cards/card-cantiere";
 import ModalRDLCantiere from "../../components/modals/modal-rdl-cantiere";
+import Button from "@mui/material/Button";
 
 interface PlanScreenProps {}
 
@@ -64,10 +65,10 @@ const PlanScreen: React.FC<PlanScreenProps> = () => {
   return (
     <div className="plan-container">
       <div className="toolbar-plan">
-        <button className="button" onClick={handleOpenModalPlan}>
+        <Button className="button" onClick={handleOpenModalPlan} variant="outlined">
           <FontAwesomeIcon className="icon" icon={faPlus} />
           Plan
-        </button>
+        </Button>
       </div>
 
       <div className={"plan-line"}></div>
