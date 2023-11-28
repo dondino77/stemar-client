@@ -59,7 +59,7 @@ const MaterialiCantiere: React.FC<MaterialiCantiereProps> = (
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     // value={idCommittente}
-                    label="Mansione"
+                    label="Fornitore"
                     // onChange={(e) => setIdCommittente(e.target.value)}
                   >
                     {fornitori?.map((item) => (
