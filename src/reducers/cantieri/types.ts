@@ -1,8 +1,10 @@
+import { ClienteFornitore } from "../clientiFornitori";
 
 export interface Cantiere {
     id: string;
     _id?: string;
-    committente: string;
+    idCommittente: ClienteFornitore | string;
+    committente?: string;
     luogo: string;
     oggettoLavori: string;
     impresa: string;

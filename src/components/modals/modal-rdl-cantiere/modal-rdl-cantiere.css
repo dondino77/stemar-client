@@ -40,13 +40,14 @@
     padding: 20px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
-    height: 520px;
+    height: 100%;
   }
 
   .content-rdl {
     /* flex: 1; */
     display: flex;
     flex-direction: column;
+    height: 100%;
   }
 
   .tabs {

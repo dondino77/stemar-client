@@ -36,7 +36,7 @@ const CardPlan: React.FC<CardPlanProps> = ({
       className={`card ${selected ? "selected" : ""}`}
       onClick={() => actionSelectPlan()}
     >
-      <h2 className="card-title">{rdlPlan.cantiere.committente}</h2>
+      <h2 className="card-title">{`${rdlPlan.cantiere?.committente || ""}`}</h2>
       <div className="card-content">
         {(rdlPlan?.personale?.length || 0) > 0 && <h4>Personale</h4>}
 

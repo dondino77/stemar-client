@@ -7,6 +7,8 @@ import { RDLPlan } from "../../../reducers/plan";
 import { Persona } from "../../../reducers/personale";
 import usePlanHook from "../../../screens/Plan/usePlanHook";
 import Button from "@mui/material/Button";
+import MaterialiCantiere from "./materiali-cantiere";
+import { ClienteFornitore } from "../../../reducers/clientiFornitori";
 
 interface TabProps {
   label: string;
@@ -26,15 +28,12 @@ const Tab: React.FC<TabProps> = ({ label, activeTab, onClick }) => {
   );
 };
 
-const Materiali = () => {
-  return <div>Contenuto della tab Materiali</div>;
-};
-
 interface ModalRDLCantiereProps {
   onClose: () => void;
   rdlPlan: RDLPlan | undefined;
   assenti: Persona[] | undefined;
   onConfirm: (personale: any, mezzi: any) => void;
+  fornitori: ClienteFornitore[];
 }
 
 const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
@@ -42,6 +41,7 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
   rdlPlan,
   assenti,
   onConfirm,
+  fornitori
 }) => {
   const [activeTab, setActiveTab] = useState("Personale");
   const { personale } = usePlanHook();
@@ -64,34 +64,26 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
   return (
     <div className={`modal open`}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="tabs">
-          <Tab label="Assenze" activeTab={activeTab} onClick={handleTabClick} />
-          <Tab
-            label="Personale"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
-          <Tab label="Mezzi" activeTab={activeTab} onClick={handleTabClick} />
-
-          <Tab
-            label="Materiali"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
-          <Tab
-            label="Amministrazione"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
-
-          <Tab label="SAL" activeTab={activeTab} onClick={handleTabClick} />
-          <Tab
-            label="Riepilogo"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
-        </div>
         <div className="content-rdl">
+          <div className="tabs">
+            <Tab
+              label="Assenze"
+              activeTab={activeTab}
+              onClick={handleTabClick}
+            />
+            <Tab
+              label="Personale"
+              activeTab={activeTab}
+              onClick={handleTabClick}
+            />
+            <Tab label="Mezzi" activeTab={activeTab} onClick={handleTabClick} />
+
+            <Tab
+              label="Materiali"
+              activeTab={activeTab}
+              onClick={handleTabClick}
+            />
+          </div>
           <div className="tab-content-rdl">
             {activeTab === "Assenze" && <Assenti assenti={assenti || []} />}
             {activeTab === "Mezzi" && (
@@ -109,8 +101,9 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
                 setPersonaleInCantiere={setPersonaleInCantiere}
               />
             )}
-            {activeTab === "materiali" && <Materiali />}
+            {activeTab === "Materiali" && <MaterialiCantiere fornitori={fornitori}/>}
           </div>
+
           <div className="cantiere-rdl-modal-bottom-bar">
             <Button
               className="cantiere-rdl-btn-cancel"

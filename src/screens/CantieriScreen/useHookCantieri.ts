@@ -1,5 +1,6 @@
 
 import { Cantiere, cantieriList, createCantiere, getCantieri, updateCantiere } from '../../reducers/cantieri';
+import { clientiList } from '../../reducers/clientiFornitori';
 import { useAppDispatch, useAppSelector } from '../../store';
 
 function useCantieriHook() {
@@ -11,6 +12,7 @@ function useCantieriHook() {
 
     getCantieri: () => dispatch(getCantieri()),
 
+    clienti: useAppSelector(clientiList),
     cantieri: useAppSelector(cantieriList),
   };
 }

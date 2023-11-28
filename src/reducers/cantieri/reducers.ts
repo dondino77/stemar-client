@@ -6,12 +6,12 @@ const initialState: CantieriReducerType = {
   cantieriList: [],
   form: {
     id: "",
-    committente: "",
     luogo: "",
     oggettoLavori: "",
     impresa: "",
     preventivo: 0,
     durataGG: 0,
+    idCommittente: ''
   },
 };
 

@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 interface PlanScreenProps {}
 
 const PlanScreen: React.FC<PlanScreenProps> = () => {
-  const { plan, getPlan, resetForm, updateRdlList } = usePlanHook();
+  const { plan, getPlan, resetForm, updateRdlList, fornitori } = usePlanHook();
 
   const [isModalPlanOpen, setIsModalPlanOpen] = useState(false);
   const [isModalRDLOpen, setIsModalRDLOpen] = useState(false);
@@ -102,6 +102,7 @@ const PlanScreen: React.FC<PlanScreenProps> = () => {
           rdlPlan={itemSelected}
           assenti={plan?.assenze}
           onConfirm={handleConfirmModalRDL}
+          fornitori={fornitori || []}
         />
       )}
     </div>

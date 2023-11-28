@@ -1,5 +1,6 @@
 
 import { cantieriList } from '../../reducers/cantieri';
+import { fornitoriList } from '../../reducers/clientiFornitori';
 import { mezziList } from '../../reducers/mezzi';
 import { personaleList } from '../../reducers/personale';
 import { PlanType, RDLPlan, savePlan, form, getFormPlan, getPlan, plan, resetForm, updateRdlList } from '../../reducers/plan';
@@ -21,6 +22,7 @@ function usePlanHook() {
     personale: useAppSelector(personaleList),
     plan: useAppSelector(plan),
     form: useAppSelector(form),
+    fornitori: useAppSelector(fornitoriList),
   };
 }
 

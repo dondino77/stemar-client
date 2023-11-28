@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 interface CantieriScreenProps {}
 
 const CantieriScreen: React.FC<CantieriScreenProps> = () => {
-  const { createCantiere, cantieri, updateCantiere } = useCantieriHook();
+  const { createCantiere, cantieri, updateCantiere, clienti } = useCantieriHook();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -68,6 +68,7 @@ const CantieriScreen: React.FC<CantieriScreenProps> = () => {
           onClose={handleCloseModal}
           onSalva={handleSalva}
           cantiere={cantiereSelected}
+          clienti={clienti}
         />
       )}
     </div>

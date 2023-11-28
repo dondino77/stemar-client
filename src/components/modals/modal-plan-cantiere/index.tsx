@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from "uuid";
 import usePlanHook from "../../../screens/Plan/usePlanHook";
 import { Mezzo } from "../../../reducers/mezzi";
 import Button from "@mui/material/Button";
+import { ClienteFornitore } from "../../../reducers/clientiFornitori";
 
 interface ModalRDLCantiereProps {
   onClose: () => void;
@@ -48,6 +49,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   };
 
   const addPlan = (item: Cantiere) => {
+    console.log('ite', item)
     setRdlInPlan([...rdlInPlan, { id: uuidv4(), cantiere: item }]);
   };
 
@@ -222,7 +224,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
                         className={`personale-in-plan-row-text`}
                         key={`personale${index}`}
                       >
-                        {`${item.committente} `}
+                        {`${(item.idCommittente as ClienteFornitore)?.nome || ""}`}
                       </div>
                       <div
                         className="personale-in-plan-row-button"

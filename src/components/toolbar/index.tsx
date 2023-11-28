@@ -122,7 +122,7 @@ const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
 
   const handleAmministrazioneClick = () => {
     setScreenSelected("amministrazione");
-    // onSelectScreen("personale");
+    onSelectScreen("amministrazione");
   };
   const handleGareClick = () => {
     setScreenSelected("gare");
@@ -145,12 +145,12 @@ const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
         >
           Plan
         </Button>
-        {/* <Button
+        <Button
           className={screenSelected === "cantieri" ? "selected" : ""}
           onClick={handleCantieriClick}
         >
           Cantieri
-        </Button> */}
+        </Button>
         {/* <Button
           className={screenSelected === "mezzi" ? "selected" : ""}
           onClick={handleMezziClick}
@@ -164,7 +164,6 @@ const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
           Personale
         </Button> */}
         <Button
-          disabled
           className={screenSelected === "amministrazione" ? "selected" : ""}
           onClick={handleAmministrazioneClick}
         >
@@ -199,12 +198,12 @@ const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem
+          {/* <MenuItem
             disableRipple
             onClick={handleCantieriClick}
           >
             CANTIERI
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem
             onClick={handleMezziClick}
             disableRipple

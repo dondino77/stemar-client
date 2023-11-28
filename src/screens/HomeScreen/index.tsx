@@ -9,6 +9,7 @@ import PersonaleScreen from "../PersonaleScreen";
 import PlanScreen from "../Plan";
 import useHomeHook from "./useHookHome";
 import ClientiFornitoriScreen from "../ClientiFornitori";
+import AmministrazioneScreen from "../Amministrazione";
 
 interface HomeProps {}
 
@@ -64,6 +65,8 @@ const Home: React.FC<HomeProps> = () => {
           {screenSelected === "mezzi" && <MezziScreen />}
           {screenSelected === "personale" && <PersonaleScreen />}
           {screenSelected === "clientiFornitori" && <ClientiFornitoriScreen />}
+          {screenSelected === "amministrazione" && <AmministrazioneScreen />}
+
         </div>
       </div>
     </div>

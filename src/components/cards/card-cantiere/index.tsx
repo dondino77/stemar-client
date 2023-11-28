@@ -49,7 +49,7 @@ const CardCantiere: React.FC<CardCantiereProps> = ({
       <div className={`${cantiere.error ? "red-line" : "green-line"}`}></div>
       <h2 className="card-title">{`${cantiere.committente || ""}`}</h2>
       <p className="card-description">{`Impresa: ${
-        cantiere.committente || ""
+        cantiere.impresa || ""
       }`}</p>
       <p className="card-description">{`Luogo: ${cantiere.luogo || ""}`}</p>
       <p className="card-description">{`Durata GG: ${
