@@ -13,7 +13,7 @@ interface CardClientiFornitoriProps {
 const CardClientiFornitori: React.FC<CardClientiFornitoriProps> = ({ clienteFornitore, onDetail }) => {
   return (
     <div className={`card_cliente_fornitore`}>
-      <div className={"green-line"}></div>
+      <div className={`line-${clienteFornitore.idTipo}`}></div>
 
       <h2 className="card-title">{clienteFornitore.nome || ""}</h2>
       <p className="card-description">{`Indirizzo: ${clienteFornitore.indirizzo}`}</p>

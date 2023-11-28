@@ -1,13 +1,22 @@
-
-import { ClienteFornitore, clientiFornitoriList, clientiList, createClienteFornitore, fornitoriList, getClientiFornitori, updateClienteFornitore } from '../../reducers/clientiFornitori';
-import { useAppDispatch, useAppSelector } from '../../store';
+import {
+  ClienteFornitore,
+  clientiFornitoriList,
+  clientiList,
+  createClienteFornitore,
+  fornitoriList,
+  getClientiFornitori,
+  updateClienteFornitore,
+} from "../../reducers/clientiFornitori";
+import { useAppDispatch, useAppSelector } from "../../store";
 
 function useClientiFornitoriHook() {
   const dispatch = useAppDispatch();
 
   return {
-    createClienteFornitore: (form: ClienteFornitore) => dispatch(createClienteFornitore(form)),
-    updateClienteFornitore: (form: ClienteFornitore) => dispatch(updateClienteFornitore(form)),
+    createClienteFornitore: (form: ClienteFornitore) =>
+      dispatch(createClienteFornitore(form)),
+    updateClienteFornitore: (form: ClienteFornitore) =>
+      dispatch(updateClienteFornitore(form)),
 
     getClientiFornitori: () => dispatch(getClientiFornitori()),
 

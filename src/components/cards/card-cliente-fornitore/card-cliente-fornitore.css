@@ -29,18 +29,25 @@
   font-size: 16px;
 }
 
-.red-line {
+.line-0 {
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: green;
+}
+
+.line-1 {
   left: 0;
   width: 100%;
   height: 3px;
   background-color: red;
 }
 
-.green-line {
+.line-2 {
   left: 0;
   width: 100%;
   height: 3px;
-  background-color: green;
+  background-color: yellow;
 }
 
 .card-bottom-bar {

@@ -7,13 +7,13 @@ const clientiFornitoriState = (state: ClientiFornitoriState) =>
 export const clientiList = createSelector(
   clientiFornitoriState,
   (state): ClienteFornitore[] | undefined =>
-    state.clientiFornitoriList.filter((item) => item.idTipo === 0)
+    state.clientiFornitoriList.filter((item) => item.idTipo === 0 || item.idTipo === 2)
 );
 
 export const fornitoriList = createSelector(
   clientiFornitoriState,
   (state): ClienteFornitore[] | undefined =>
-    state.clientiFornitoriList.filter((item) => item.idTipo === 1)
+    state.clientiFornitoriList.filter((item) => item.idTipo === 1 || item.idTipo === 2)
 );
 
 export const clientiFornitoriList = createSelector(
