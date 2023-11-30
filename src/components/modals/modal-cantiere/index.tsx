@@ -12,7 +12,6 @@ import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
 import { ClienteFornitore } from "../../../reducers/clientiFornitori";
 import { InputAdornment, InputLabel, MenuItem, Select } from "@mui/material";
-import { mezziInCantiere } from "../../../reducers/cantieri";
 
 interface TabProps {
   label: string;
@@ -114,12 +113,6 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({
               activeTab={activeTab}
               onClick={handleTabClick}
             />
-            <Tab
-              label="Amministrazione"
-              activeTab={activeTab}
-              onClick={handleTabClick}
-            />
-
             <Tab label="SAL" activeTab={activeTab} onClick={handleTabClick} />
             <Tab
               label="Riepilogo"
