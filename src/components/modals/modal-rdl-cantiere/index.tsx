@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./modal-rdl-cantiere.css";
 import PersonaleCantiere from "./personale-cantiere";
 import MezziCantiere from "./mezzi-cantiere";
@@ -9,6 +9,7 @@ import usePlanHook from "../../../screens/Plan/usePlanHook";
 import Button from "@mui/material/Button";
 import MaterialiCantiere from "./materiali-cantiere";
 import { ClienteFornitore } from "../../../reducers/clientiFornitori";
+import NoteCantiere from "./note-cantiere";
 
 interface TabProps {
   label: string;
@@ -41,12 +42,18 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
   rdlPlan,
   assenti,
   onConfirm,
-  fornitori
+  fornitori,
 }) => {
   const [activeTab, setActiveTab] = useState("Personale");
   const { personale } = usePlanHook();
   const [mezziInCantiere, setMezziInCantiere] = useState<any[]>([]);
+  const [, setRdlPlanState] = useState<RDLPlan>();
   const [personaleInCantiere, setPersonaleInCantiere] = useState<any>([]);
+
+  useEffect(() => {
+    setRdlPlanState(rdlPlan);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
@@ -59,6 +66,17 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
 
   const handleConfirm = () => {
     onConfirm(personaleInCantiere, mezziInCantiere);
+  };
+
+  const actionSetNote = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    // rdlPlan?.note = event.target.value;
+
+    // const index = mezziInCantiere?.findIndex((item1: Mezzo) => item1.id === id);
+    // const upd = JSON.parse(JSON.stringify(mezziInCantiere));
+    // upd[index].ore = value;
+    // setMezziInCantiere(upd);
   };
 
   return (
@@ -83,6 +101,7 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
               activeTab={activeTab}
               onClick={handleTabClick}
             />
+            <Tab label="Note" activeTab={activeTab} onClick={handleTabClick} />
           </div>
           <div className="tab-content-rdl">
             {activeTab === "Assenze" && <Assenti assenti={assenti || []} />}
@@ -101,7 +120,16 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
                 setPersonaleInCantiere={setPersonaleInCantiere}
               />
             )}
-            {activeTab === "Materiali" && <MaterialiCantiere fornitori={fornitori}/>}
+            {activeTab === "Materiali" && (
+              <MaterialiCantiere fornitori={fornitori} />
+            )}
+
+            {activeTab === "Note" && (
+              <NoteCantiere
+                note={rdlPlan?.note ?? ""}
+                setNote={actionSetNote}
+              />
+            )}
           </div>
 
           <div className="cantiere-rdl-modal-bottom-bar">

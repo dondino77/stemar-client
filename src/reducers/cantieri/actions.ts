@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Cantiere, ThunkApiConfig } from "./types";
+import { Cantiere, MezziInCantiere, PersonaleInCantiere, ThunkApiConfig } from "./types";
 import { callApi } from "../api";
 import { TypeLoader, hideLoader, showLoader } from "../common";
 
@@ -30,6 +30,54 @@ export const getCantieri = createAsyncThunk<Cantiere[], void, ThunkApiConfig>(
     try {
       dispatch(showLoader(TypeLoader.GENERAL));
       const result = await callApi("GET", "/getCantieri", undefined);
+
+      return result.response;
+    } catch (error) {
+      return rejectWithValue(error);
+    } finally {
+      dispatch(hideLoader());
+    }
+  }
+);
+
+export const getPersonaleCantiere = createAsyncThunk<
+  PersonaleInCantiere[],
+  string,
+  ThunkApiConfig
+>(
+  "cantieri/getPersonaleCantiere",
+  async (idCantiere, { rejectWithValue, getState, dispatch }) => {
+    try {
+      dispatch(showLoader(TypeLoader.GENERAL));
+      const result = await callApi(
+        "GET",
+        `/getPersonaleCantiere/?cantiereId=${idCantiere}`,
+        undefined
+      );
+
+      return result.response;
+    } catch (error) {
+      return rejectWithValue(error);
+    } finally {
+      dispatch(hideLoader());
+    }
+  }
+);
+
+export const getMezziCantiere = createAsyncThunk<
+  MezziInCantiere[],
+  string,
+  ThunkApiConfig
+>(
+  "cantieri/getMezziCantiere",
+  async (idCantiere, { rejectWithValue, getState, dispatch }) => {
+    try {
+      dispatch(showLoader(TypeLoader.GENERAL));
+      const result = await callApi(
+        "GET",
+        `/getMezziCantiere/?cantiereId=${idCantiere}`,
+        undefined
+      );
 
       return result.response;
     } catch (error) {

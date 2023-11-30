@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { CantieriReducerType } from "./types";
-import { createCantiere, getCantieri, updateCantiere } from "./actions";
+import { createCantiere, getCantieri, getMezziCantiere, getPersonaleCantiere, updateCantiere } from "./actions";
 
 const initialState: CantieriReducerType = {
   cantieriList: [],
@@ -39,5 +39,17 @@ export const cantieriReducer = createReducer(initialState, (builder) => {
     })
     .addCase(getCantieri.pending, (state) => {
       state.cantieriList = initialState.cantieriList;
+    })
+    .addCase(getPersonaleCantiere.pending, (state) => {
+      state.form.personaleList = initialState.form.personaleList;
+    })
+    .addCase(getPersonaleCantiere.fulfilled, (state, action) => {
+      state.form.personaleList = action.payload;
+    })
+    .addCase(getMezziCantiere.pending, (state) => {
+      state.form.mezziList = initialState.form.mezziList;
+    })
+    .addCase(getMezziCantiere.fulfilled, (state, action) => {
+      state.form.mezziList = action.payload;
     });
 });

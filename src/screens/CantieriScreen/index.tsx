@@ -11,14 +11,22 @@ import Button from "@mui/material/Button";
 interface CantieriScreenProps {}
 
 const CantieriScreen: React.FC<CantieriScreenProps> = () => {
-  const { createCantiere, cantieri, updateCantiere, clienti } = useCantieriHook();
+  const {
+    createCantiere,
+    cantieri,
+    updateCantiere,
+    clienti,
+    getPersonaleCantiere,
+    getMezziCantiere,
+    mezziInCantiere,
+    personaleInCantiere,
+  } = useCantieriHook();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [cantiereSelected, setCantiereSelected] = useState<
     Cantiere | undefined
   >(undefined);
- 
 
   const handleOpenModal = () => {
     setCantiereSelected(undefined);
@@ -31,7 +39,7 @@ const CantieriScreen: React.FC<CantieriScreenProps> = () => {
 
   const handleSalva = (cantiere: Cantiere) => {
     if (cantiere.id !== "") {
-      updateCantiere(cantiere)
+      updateCantiere(cantiere);
     } else {
       createCantiere(cantiere);
     }
@@ -56,11 +64,7 @@ const CantieriScreen: React.FC<CantieriScreenProps> = () => {
 
       <div className="page">
         {cantieri?.map((card: Cantiere, index) => (
-          <CardCantiere
-            key={index}
-            cantiere={card}
-            onDetail={handleDetail}
-          />
+          <CardCantiere key={index} cantiere={card} onDetail={handleDetail} />
         ))}
       </div>
       {isModalOpen && (
@@ -69,6 +73,10 @@ const CantieriScreen: React.FC<CantieriScreenProps> = () => {
           onSalva={handleSalva}
           cantiere={cantiereSelected}
           clienti={clienti}
+          getPersonaleCantiere={getPersonaleCantiere}
+          getMezziCantiere={getMezziCantiere}
+          mezziInCantiere={mezziInCantiere ?? []}
+          personaleInCantiere={personaleInCantiere ?? []}
         />
       )}
     </div>

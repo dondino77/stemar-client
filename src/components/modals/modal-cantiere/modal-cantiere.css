@@ -59,3 +59,21 @@
   background-color: #007bff;
   color: #fff;
 }
+
+.cantiere-mezzo-in-cantiere-row,
+.cantiere-personale-in-cantiere-row {
+  /* margin-bottom: 5px; */
+  height: 30px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  /* margin-bottom: 1.5px; */
+}
+
+.cantiere-mezzo-in-cantiere-nome,
+.cantiere-personale-in-cantiere-nome {
+  display: flex;
+  flex: 1;
+  align-items: center; 
+}

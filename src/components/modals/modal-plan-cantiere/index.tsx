@@ -49,7 +49,6 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
   };
 
   const addPlan = (item: Cantiere) => {
-    console.log('ite', item)
     setRdlInPlan([...rdlInPlan, { id: uuidv4(), cantiere: item }]);
   };
 
@@ -191,6 +190,16 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
     getFormPlan(e.target.value);
   };
 
+  const actionChangeNote = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const rdlIndex = rdlInPlan.findIndex((rdl) => rdl.id === rdlSelect?.id);
+    if (rdlIndex !== -1) {
+      const updateNoteRdl = JSON.parse(JSON.stringify(rdlInPlan));
+      updateNoteRdl[rdlIndex].note = event.target.value;
+      setRdlInPlan(updateNoteRdl);
+      setRdlSelect(updateNoteRdl[rdlIndex]);
+    }
+  }
+
   return (
     <div className={`modal open`}>
       <div className="modal-content-plan" onClick={(e) => e.stopPropagation()}>
@@ -224,7 +233,9 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
                         className={`personale-in-plan-row-text`}
                         key={`personale${index}`}
                       >
-                        {`${(item.idCommittente as ClienteFornitore)?.nome || ""}`}
+                        {`${
+                          (item.idCommittente as ClienteFornitore)?.nome || ""
+                        }`}
                       </div>
                       <div
                         className="personale-in-plan-row-button"
@@ -380,6 +391,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
               <CardPlan
                 key={index}
                 rdlPlan={item}
+                onChangeNote={actionChangeNote}
                 onDeletePlan={(id) => removePlan(id)}
                 onDeleteMezzo={(idPlan, idMezzo) =>
                   removeMezzoInPlan(idPlan, idMezzo)
@@ -393,6 +405,7 @@ const ModalPlanCantiere: React.FC<ModalRDLCantiereProps> = ({ onClose }) => {
                 }
               />
             ))}
+
           </div>
         </div>
 

@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./modal-cantiere.css";
-import { Cantiere } from "../../../reducers/cantieri/types";
+import {
+  Cantiere,
+  MezziInCantiere,
+  PersonaleInCantiere,
+} from "../../../reducers/cantieri/types";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -8,6 +12,7 @@ import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
 import { ClienteFornitore } from "../../../reducers/clientiFornitori";
 import { InputAdornment, InputLabel, MenuItem, Select } from "@mui/material";
+import { mezziInCantiere } from "../../../reducers/cantieri";
 
 interface TabProps {
   label: string;
@@ -32,6 +37,10 @@ interface ModalCantiereProps {
   clienti?: ClienteFornitore[];
   onClose: () => void;
   onSalva: (cantiere: Cantiere) => void;
+  getPersonaleCantiere: (idCantiere: string) => void;
+  getMezziCantiere: (idCantiere: string) => void;
+  mezziInCantiere: MezziInCantiere[];
+  personaleInCantiere: PersonaleInCantiere[];
 }
 
 const ModalCantiere: React.FC<ModalCantiereProps> = ({
@@ -39,6 +48,10 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({
   onSalva,
   cantiere,
   clienti,
+  getPersonaleCantiere,
+  getMezziCantiere,
+  mezziInCantiere,
+  personaleInCantiere,
 }) => {
   const [idCommittente, setIdCommittente] = useState(
     (cantiere?.idCommittente as ClienteFornitore)?._id || ""
@@ -68,6 +81,12 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    getPersonaleCantiere(cantiere?._id ?? "");
+    getMezziCantiere(cantiere?._id ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="cantiere-modal">
@@ -180,6 +199,38 @@ const ModalCantiere: React.FC<ModalCantiereProps> = ({
                   }}
                 />
               </Box>
+            </>
+          )}
+          {activeTab === "Mezzi" && (
+            <>
+              {mezziInCantiere.map((mezzo: MezziInCantiere, index) => (
+                <div
+                  key={`mezzo_in_cantiere${index}`}
+                  className="cantiere-mezzo-in-cantiere-row"
+                >
+                  <div className={`cantiere-mezzo-in-cantiere-nome`}>
+                    {`${mezzo.nome} ${mezzo.targa}`}
+                  </div>
+                  <div>{`${mezzo.oreTotali}`}</div>
+                </div>
+              ))}
+            </>
+          )}
+          {activeTab === "Personale" && (
+            <>
+              {personaleInCantiere.map(
+                (personale: PersonaleInCantiere, index) => (
+                  <div
+                    key={`personale_in_cantiere${index}`}
+                    className="cantiere-personale-in-cantiere-row"
+                  >
+                    <div className={`cantiere-personale-in-cantiere-nome`}>
+                      {`${personale.nome} ${personale.cognome}`}
+                    </div>
+                    <div>{`${personale.oreTotali}`}</div>
+                  </div>
+                )
+              )}
             </>
           )}
         </div>

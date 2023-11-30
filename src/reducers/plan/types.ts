@@ -22,6 +22,7 @@ export interface RDLPlan {
   cantiere: Cantiere;
   mezzi?: MezziPlan[];
   personale?: PersonalePlan[];
+  note?: string;
 }
 
 export interface PlanType {
