@@ -27,7 +27,6 @@ const CardPersonale: React.FC<CardPersonaleProps> = ({ persona, onDetail }) => {
       <div className="card-bottom-bar">
         <div className="left-buttons">
           <Button
-            className="left-button"
             onClick={() => onDetail(persona)}
             variant="outlined"
           >

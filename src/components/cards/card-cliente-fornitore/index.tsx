@@ -22,7 +22,7 @@ const CardClientiFornitori: React.FC<CardClientiFornitoriProps> = ({ clienteForn
 
       <div className="card-bottom-bar">
         <div className="left-buttons">
-          <Button className="left-button" onClick={() => onDetail(clienteFornitore)} variant="outlined">
+          <Button onClick={() => onDetail(clienteFornitore)} variant="outlined">
             <FontAwesomeIcon icon={faEye} />
           </Button>
         </div>

@@ -42,7 +42,7 @@ const CardMezzi: React.FC<CardMezziProps> = ({ mezzo, onDetail }) => {
       }`}</p>
       <div className="card-bottom-bar">
         <div className="left-buttons">
-          <Button className="left-button" onClick={() => onDetail(mezzo)} variant="outlined">
+          <Button onClick={() => onDetail(mezzo)} variant="outlined">
             <FontAwesomeIcon icon={faEye} />
           </Button>
         </div>
