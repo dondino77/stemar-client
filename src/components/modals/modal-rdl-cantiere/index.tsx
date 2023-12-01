@@ -35,6 +35,7 @@ interface ModalRDLCantiereProps {
   assenti: Persona[] | undefined;
   onConfirm: (personale: any, mezzi: any) => void;
   fornitori: ClienteFornitore[];
+  setNote: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
 const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
@@ -43,6 +44,7 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
   assenti,
   onConfirm,
   fornitori,
+  setNote
 }) => {
   const [activeTab, setActiveTab] = useState("Personale");
   const { personale } = usePlanHook();
@@ -66,17 +68,6 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
 
   const handleConfirm = () => {
     onConfirm(personaleInCantiere, mezziInCantiere);
-  };
-
-  const actionSetNote = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    // rdlPlan?.note = event.target.value;
-
-    // const index = mezziInCantiere?.findIndex((item1: Mezzo) => item1.id === id);
-    // const upd = JSON.parse(JSON.stringify(mezziInCantiere));
-    // upd[index].ore = value;
-    // setMezziInCantiere(upd);
   };
 
   return (
@@ -127,7 +118,7 @@ const ModalRDLCantiere: React.FC<ModalRDLCantiereProps> = ({
             {activeTab === "Note" && (
               <NoteCantiere
                 note={rdlPlan?.note ?? ""}
-                setNote={actionSetNote}
+                setNote={setNote}
               />
             )}
           </div>
