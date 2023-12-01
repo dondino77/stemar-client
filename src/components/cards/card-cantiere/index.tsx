@@ -65,12 +65,12 @@ const CardCantiere: React.FC<CardCantiereProps> = ({
       <div className="card-bottom-bar">
         <div className="left-buttons">
           {onDetail && (
-            <Button className="left-button" onClick={() => onDetail(cantiere)} variant="outlined">
+            <Button onClick={() => onDetail(cantiere)} variant="outlined">
               <FontAwesomeIcon icon={faEye} />
             </Button>
           )}
           {onRDL && (
-            <Button className="left-button" onClick={() => rdl && onRDL(rdl)} variant="outlined">
+            <Button onClick={() => rdl && onRDL(rdl)} variant="outlined">
               <FontAwesomeIcon icon={faCalendarDays} />
             </Button>
           )}
