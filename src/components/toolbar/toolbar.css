@@ -15,7 +15,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: medium;
+    font-size: small;
   }
 
   .toolbar-left button {

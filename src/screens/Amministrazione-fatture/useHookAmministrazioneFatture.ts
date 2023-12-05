@@ -2,11 +2,11 @@
 import { clientiFornitoriList } from '../../reducers/clientiFornitori';
 import { useAppSelector } from '../../store';
 
-function useAmministrazioneHook() {
+function useAmministrazioneFattureHook() {
 
   return {
     clientiFornitori: useAppSelector(clientiFornitoriList),
   };
 }
 
-export default useAmministrazioneHook;
+export default useAmministrazioneFattureHook;

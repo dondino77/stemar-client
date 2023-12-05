@@ -1,19 +1,15 @@
 import React, { useState } from "react";
-import "./amministrazione.css";
+import "./amministrazione-clienti.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-
-import Button from "@mui/material/Button";
 import { ClienteFornitore } from "../../reducers/clientiFornitori";
 import CardClientiFornitori from "../../components/cards/card-cliente-fornitore";
 import ModalClientiFornitori from "../../components/modals/modal-clliente-fornitore";
-import useAmministrazioneHook from "./useHookAmministrazione";
+import useAmministrazioneClientiHook from "./useHookAmministrazioneClienti";
 
-interface AmministrazioneScreenProps {}
+interface AmministrazioneClientiScreenProps {}
 
-const AmministrazioneScreen: React.FC<AmministrazioneScreenProps> = () => {
-  const { clientiFornitori } = useAmministrazioneHook();
+const AmministrazioneClientiScreen: React.FC<AmministrazioneClientiScreenProps> = () => {
+  const { clienti } = useAmministrazioneClientiHook();
   const [clienteFornitoreSelected] = useState<
     ClienteFornitore | undefined
   >(undefined);
@@ -45,17 +41,11 @@ const AmministrazioneScreen: React.FC<AmministrazioneScreenProps> = () => {
 
   return (
     <div className="mezzi-container">
-      <div className="toolbar-mezzi">
-        <Button className="button" variant="outlined">
-          <FontAwesomeIcon className="icon" icon={faPlus} />
-          Registrazione Fattura
-        </Button>
-      </div>
 
       <div className={"mezzi-line"}></div>
 
       <div className="page">
-        {clientiFornitori?.map((card: ClienteFornitore, index) => (
+        {clienti?.map((card: ClienteFornitore, index) => (
           <CardClientiFornitori
             key={index}
             clienteFornitore={card}
@@ -74,4 +64,4 @@ const AmministrazioneScreen: React.FC<AmministrazioneScreenProps> = () => {
   );
 };
 
-export default AmministrazioneScreen;
+export default AmministrazioneClientiScreen;

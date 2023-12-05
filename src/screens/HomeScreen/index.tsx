@@ -9,7 +9,9 @@ import PersonaleScreen from "../PersonaleScreen";
 import PlanScreen from "../Plan";
 import useHomeHook from "./useHookHome";
 import ClientiFornitoriScreen from "../ClientiFornitori";
-import AmministrazioneScreen from "../Amministrazione";
+import AmministrazioneFattureScreen from "../Amministrazione-fatture";
+import AmministrazioneClientiScreen from "../Amministrazione-clienti";
+import AmministrazioneFornitoriScreen from "../Amministrazione-fornitori";
 
 interface HomeProps {}
 
@@ -23,7 +25,9 @@ const Home: React.FC<HomeProps> = () => {
     | "cantieri"
     | "mezzi"
     | "personale"
-    | "amministrazione"
+    | "amministrazione-fatture"
+    | "amministrazione-clienti"
+    | "amministrazione-fornitori"
     | "gare"
     | "plan"
     | "clientiFornitori"
@@ -34,7 +38,9 @@ const Home: React.FC<HomeProps> = () => {
       | "cantieri"
       | "mezzi"
       | "personale"
-      | "amministrazione"
+      | "amministrazione-fatture"
+      | "amministrazione-clienti"
+      | "amministrazione-fornitori"
       | "gare"
       | "plan"
       | "clientiFornitori"
@@ -65,8 +71,9 @@ const Home: React.FC<HomeProps> = () => {
           {screenSelected === "mezzi" && <MezziScreen />}
           {screenSelected === "personale" && <PersonaleScreen />}
           {screenSelected === "clientiFornitori" && <ClientiFornitoriScreen />}
-          {screenSelected === "amministrazione" && <AmministrazioneScreen />}
-
+          {screenSelected === "amministrazione-fatture" && <AmministrazioneFattureScreen />}
+          {screenSelected === "amministrazione-clienti" && <AmministrazioneClientiScreen />}
+          {screenSelected === "amministrazione-fornitori" && <AmministrazioneFornitoriScreen />}
         </div>
       </div>
     </div>

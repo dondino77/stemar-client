@@ -20,7 +20,9 @@ interface ToolbarProps {
       | "cantieri"
       | "mezzi"
       | "personale"
-      | "amministrazione"
+      | "amministrazione-fatture"
+      | "amministrazione-clienti"
+      | "amministrazione-fornitori"
       | "gare"
       | "plan"
       | "clientiFornitori"
@@ -73,20 +75,30 @@ const StyledMenu = styled((props: MenuProps) => (
 const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
   const { onLogout, onSelectScreen } = iProps;
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const [amministrazioneAnchorEl, setAmministrazioneAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anagraficheAnchorEl, setAnagraficheAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const openAmministrazione = Boolean(amministrazioneAnchorEl);
+  const openAnagrafiche = Boolean(anagraficheAnchorEl);
+
+  const handleAmministrazioneClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAmministrazioneAnchorEl(event.currentTarget);
+  };
+  const handleAnagraficheClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnagraficheAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    setAnchorEl(null);
+    setAmministrazioneAnchorEl(null);
+    setAnagraficheAnchorEl(null);
   };
 
   const [screenSelected, setScreenSelected] = useState<
     | "cantieri"
     | "mezzi"
     | "personale"
-    | "amministrazione"
+    | "amministrazione-fatture"
+    | "amministrazione-clienti"
+    | "amministrazione-fornitori"
     | "gare"
     | "plan"
     | "clientiFornitori"
@@ -120,10 +132,24 @@ const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
     handleClose();
   };
 
-  const handleAmministrazioneClick = () => {
-    setScreenSelected("amministrazione");
-    onSelectScreen("amministrazione");
+  const handleAmministrazioneFattureClick = () => {
+    setScreenSelected("amministrazione-fatture");
+    onSelectScreen("amministrazione-fatture");
+    handleClose();
   };
+
+  const handleAmministrazioneClienteClick = () => {
+    setScreenSelected("amministrazione-clienti");
+    onSelectScreen("amministrazione-clienti");
+    handleClose();
+  };
+
+  const handleAmministrazioneFornitoriClick = () => {
+    setScreenSelected("amministrazione-fornitori");
+    onSelectScreen("amministrazione-fornitori");
+    handleClose();
+  };
+
   const handleGareClick = () => {
     setScreenSelected("gare");
     // onSelectScreen("personale");
@@ -153,7 +179,7 @@ const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
         </Button>
         {/* <Button
           className={screenSelected === "mezzi" ? "selected" : ""}
-          onClick={handleMezziClick}
+          onClick={handleMezziClick} 
         >
           Mezzi
         </Button> */}
@@ -163,39 +189,63 @@ const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
         >
           Personale
         </Button> */}
-        <Button
+        {/* <Button
           className={screenSelected === "amministrazione" ? "selected" : ""}
           onClick={handleAmministrazioneClick}
         >
           Amministrazione
-        </Button>
+        </Button> */}
         <Button
-          disabled
-          className={screenSelected === "gare" ? "selected" : ""}
-          onClick={handleGareClick}
-        >
-          Gare
-        </Button>
-
-        <Button
-          id="demo-customized-button"
-          aria-controls={open ? "demo-customized-menu" : undefined}
+          id="amminstrazione-button"
+          aria-controls={openAmministrazione ? "amminstrazione-menu" : undefined}
           aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
+          aria-expanded={openAmministrazione ? "true" : undefined}
           variant="contained"
           disableElevation
-          onClick={handleClick}
+          onClick={handleAmministrazioneClick}
+          endIcon={<KeyboardArrowDownIcon />}
+        >
+          AMMINISTRAZIONE
+        </Button>
+        <StyledMenu
+          id="amminstrazione-menu"
+          MenuListProps={{
+            "aria-labelledby": "amminstrazione-button",
+          }}
+          anchorEl={amministrazioneAnchorEl}
+          open={openAmministrazione}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleAmministrazioneFattureClick} disableRipple>
+            FATTURE
+          </MenuItem>
+          <MenuItem onClick={handleAmministrazioneClienteClick} disableRipple>
+            CLIENTI
+          </MenuItem>
+          <MenuItem onClick={handleAmministrazioneFornitoriClick} disableRipple>
+            FORNITORI
+          </MenuItem>
+        </StyledMenu>
+
+        <Button
+          id="anagrafiche-button"
+          aria-controls={openAnagrafiche ? "anagrafiche-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={openAnagrafiche ? "true" : undefined}
+          variant="contained"
+          disableElevation
+          onClick={handleAnagraficheClick}
           endIcon={<KeyboardArrowDownIcon />}
         >
           ANAGRAFICHE
         </Button>
         <StyledMenu
-          id="demo-customized-menu"
+          id="anagrafiche-menu"
           MenuListProps={{
-            "aria-labelledby": "demo-customized-button",
+            "aria-labelledby": "anagrafiche-button",
           }}
-          anchorEl={anchorEl}
-          open={open}
+          anchorEl={anagraficheAnchorEl}
+          open={openAnagrafiche}
           onClose={handleClose}
         >
           {/* <MenuItem
@@ -204,22 +254,23 @@ const Toolbar: React.FC<ToolbarProps> = (iProps: ToolbarProps) => {
           >
             CANTIERI
           </MenuItem> */}
-          <MenuItem
-            onClick={handleMezziClick}
-            disableRipple
-          >
+          <MenuItem onClick={handleMezziClick} disableRipple>
             MEZZI
           </MenuItem>
-          <MenuItem
-            onClick={handlePersonaleClick}
-            disableRipple
-          >
+          <MenuItem onClick={handlePersonaleClick} disableRipple>
             PERSONALE
           </MenuItem>
           <MenuItem onClick={handleClientiFornitoriClick} disableRipple>
             CLIENTI/FORNITORI
           </MenuItem>
         </StyledMenu>
+        <Button
+          disabled
+          className={screenSelected === "gare" ? "selected" : ""}
+          onClick={handleGareClick}
+        >
+          Gare
+        </Button>
       </div>
 
       <div className="toolbar-right">
